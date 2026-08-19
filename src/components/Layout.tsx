@@ -34,6 +34,13 @@ const nav = [
   { to: "/creditos", label: "Créditos", icon: Wallet },
 ];
 
+const quickLinks = [
+  { to: "/academia", label: "Academia IA" },
+  { to: "/territorio", label: "Territorio VM" },
+  { to: "/visita", label: "Visita demo" },
+  { to: "/prueba", label: "Test de campaña" },
+];
+
 
 const roleOptions: Array<{ value: UserRole; label: string }> = [
   { value: "sales-force-creator", label: "Sales Force Creator" },
