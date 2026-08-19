@@ -12,13 +12,13 @@ import {
   Menu,
   X,
   UserCircle,
-  Bell,
   CheckCircle2,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "../lib/cn";
-import { useAppStore, type UserRole } from "../store/useAppStore";
-import { Badge, Button } from "../components/ui";
+import { useAppStore } from "../store/useAppStore";
+import { type UserRole } from "../types";
+import { Button } from "../components/ui";
 
 const nav = [
   { to: "/", label: "Centro de Mando", icon: LayoutDashboard },
@@ -50,10 +50,14 @@ const roleOptions: Array<{ value: UserRole; label: string }> = [
 
 export function Layout() {
   const [open, setOpen] = useState(false);
+
+  // Consumo desde el store actualizado
   const balance = useAppStore((s) => s.credits.balance);
   const activeUserRole = useAppStore((s) => s.activeUserRole);
   const setActiveUserRole = useAppStore((s) => s.setActiveUserRole);
-  const showBalance = activeUserRole === "marketing" || activeUserRole === "commercial";
+
+  const showBalance =
+    activeUserRole === "marketing" || activeUserRole === "commercial";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-50/30 via-slate-50 to-white">
@@ -133,106 +137,55 @@ export function Layout() {
                       <item.icon size={16} />
                     </span>
                     <span className="flex-1">{item.label}</span>
-                    {isActive && (
-                      <span className="h-1.5 w-1.5 rounded-full bg-white/70" />
-                    )}
                   </>
                 )}
               </NavLink>
             ))}
           </nav>
 
-          <div className="mt-4 border-t border-ink-100 pt-4">
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-ink-400">
-              Quick links
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {quickLinks.map((item) => (
-                <NavLink key={item.to} to={item.to} onClick={() => setOpen(false)} className="rounded-full border border-ink-200 bg-ink-50 px-2.5 py-1.5 text-[11px] font-medium text-ink-600 transition hover:border-brand-200 hover:bg-brand-50 hover:text-brand-700">
-                  {item.label}
-                </NavLink>
-              ))}
-            </div>
-          </div>
-
+          {/* Footer del Sidebar con rol activo */}
           <div className="absolute bottom-4 left-4 right-4 hidden rounded-2xl bg-gradient-to-br from-ink-800 to-ink-900 p-3 text-white shadow-lg md:block">
             <p className="text-xs font-semibold">🔬 IA Fieldforce</p>
             <p className="mt-0.5 text-[11px] text-ink-300">
-              Operador: {roleOptions.find((r) => r.value === activeUserRole)?.label || "Sales Force Creator"}
+              Operador:{" "}
+              {roleOptions.find((r) => r.value === activeUserRole)?.label}
             </p>
-            <div className="mt-2 flex gap-2">
-              <Badge tone="brand">v2.0</Badge>
-              <Badge tone="neutral">Sandbox</Badge>
-            </div>
           </div>
         </aside>
 
-        {open && (
-          <div
-            className="fixed inset-0 z-30 bg-ink-900/40 backdrop-blur-sm md:hidden"
-            onClick={() => setOpen(false)}
-            aria-hidden="true"
-          />
-        )}
-
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-ink-200/60 bg-white/80 px-4 py-3 backdrop-blur-xl shadow-sm md:px-8">
-            <div className="flex items-center gap-3">
-              <button
-                className="rounded-xl border border-ink-200 bg-white p-2 text-ink-600 shadow-sm hover:bg-ink-50 md:hidden"
-                onClick={() => setOpen(true)}
-                aria-label="Abrir menú"
-              >
-                <Menu size={18} />
-              </button>
-              <div className="hidden items-center gap-2 md:flex">
-                <span className="text-sm font-medium text-ink-700">Panel de control</span>
-                <Badge tone="success">Operativo</Badge>
-              </div>
-            </div>
+            <button
+              className="rounded-xl border border-ink-200 bg-white p-2 text-ink-600 md:hidden"
+              onClick={() => setOpen(true)}
+            >
+              <Menu size={18} />
+            </button>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 ml-auto">
               {showBalance && (
-                <div className="hidden items-center gap-1 rounded-full bg-emerald-50 px-3 py-1.5 text-sm font-semibold text-emerald-800 shadow-sm ring-1 ring-emerald-200/50 md:flex">
-                  <Wallet size={14} className="text-emerald-600" />
+                <div className="hidden items-center gap-1 rounded-full bg-emerald-50 px-3 py-1.5 text-sm font-semibold text-emerald-800 md:flex">
+                  <Wallet size={14} />
                   <span>${balance.toLocaleString()}</span>
                 </div>
               )}
 
-              <div className="hidden items-center gap-1.5 md:flex">
-                <Badge tone="brand">RAG interno</Badge>
-                <Badge tone="success">Compliance ON</Badge>
-              </div>
-
-              <label className="hidden items-center gap-2 rounded-xl border border-ink-200 bg-white px-2.5 py-1.5 text-xs font-medium text-ink-700 md:flex">
-                <span>Usuario</span>
-                <select
-                  value={activeUserRole}
-                  onChange={(event) => setActiveUserRole(event.target.value as UserRole)}
-                  className="rounded-lg border border-ink-200 bg-ink-50 px-2 py-1 text-xs font-semibold text-ink-700 outline-none focus:border-brand-400"
-                  aria-label="Selecciona el perfil activo"
-                >
-                  {roleOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-8 w-8 rounded-full p-0 text-ink-600 hover:bg-ink-100"
-                aria-label="Notificaciones"
+              <select
+                value={activeUserRole}
+                onChange={(e) => setActiveUserRole(e.target.value as UserRole)}
+                className="rounded-lg border border-ink-200 bg-white px-3 py-1.5 text-xs font-semibold text-ink-700 outline-none focus:border-brand-400"
               >
-                <Bell size={18} />
-              </Button>
+                {roleOptions.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-8 w-8 rounded-full p-0 text-ink-600 hover:bg-ink-100"
-                aria-label="Perfil de usuario"
+                className="h-8 w-8 rounded-full p-0"
               >
                 <UserCircle size={20} />
               </Button>

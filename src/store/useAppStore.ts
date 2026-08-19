@@ -16,6 +16,7 @@ import {
   governanceRules,
 } from "../data/mock";
 import type {
+  UserRole,
   AvatarConfig,
   Campaign,
   CampaignStatus,
@@ -27,13 +28,6 @@ import type {
   VisitSession,
   CtaType,
 } from "../types";
-
-export type UserRole =
-  | "sales-force-creator"
-  | "marketing"
-  | "commercial"
-  | "operations"
-  | "compliance";
 import {
   estimateAudienceSize,
   filterDoctors,
@@ -42,6 +36,7 @@ import {
 import { generateGovernedReply, startVisitOpening } from "../lib/governance";
 
 interface AppState {
+  activeUserRole: UserRole;
   governanceRules: typeof governanceRules;
   products: typeof products;
   documents: CompanyDocument[];
@@ -58,15 +53,14 @@ interface AppState {
   dispatches: DispatchJob[];
   activeVisit: VisitSession | null;
   testSession: VisitSession | null;
-  activeUserRole: UserRole;
 
+  setActiveUserRole: (role: UserRole) => void;
   addDocument: (doc: CompanyDocument) => void;
   upsertAvatar: (avatar: AvatarConfig) => void;
   upsertCampaign: (campaign: Campaign) => void;
   setCampaignStatus: (id: string, status: CampaignStatus) => void;
   deleteCampaign: (id: string) => void;
   setRuleEnforcement: (id: string, enforced: boolean) => void;
-  setActiveUserRole: (role: UserRole) => void;
   topUpCredits: (amount: number) => void;
   dispatchCampaign: (
     campaignId: string,
@@ -109,6 +103,7 @@ function msg(
 }
 
 export const useAppStore = create<AppState>((set, get) => ({
+  activeUserRole: "sales-force-creator",
   governanceRules,
   products,
   documents: seedDocuments,
@@ -125,7 +120,8 @@ export const useAppStore = create<AppState>((set, get) => ({
   dispatches: seedDispatches,
   activeVisit: null,
   testSession: null,
-  activeUserRole: "sales-force-creator",
+
+  setActiveUserRole: (role) => set({ activeUserRole: role }),
 
   addDocument: (doc) => set((s) => ({ documents: [doc, ...s.documents] })),
 
@@ -181,8 +177,6 @@ export const useAppStore = create<AppState>((set, get) => ({
         r.id === id ? { ...r, enforced } : r,
       ),
     })),
-
-  setActiveUserRole: (role) => set({ activeUserRole: role }),
 
   topUpCredits: (amount) =>
     set((s) => ({
@@ -388,7 +382,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     const avatar = avatarId
       ? (s.avatars.find((a) => a.id === avatarId) ?? s.avatars[0])
       : (s.avatars.find((a) => a.id === campaign.avatarId) ?? s.avatars[0]);
-      
+
     const realRep = s.realReps.find((r) => r.id === doctor.realRepId) ?? null;
 
     const session: VisitSession = {
