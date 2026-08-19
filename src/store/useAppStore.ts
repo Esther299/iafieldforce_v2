@@ -14,6 +14,7 @@ import {
   territoryInsights,
   trainerStyles,
   governanceRules,
+  governanceBlocks,
 } from "../data/mock";
 import type {
   UserRole,
@@ -38,6 +39,7 @@ import { generateGovernedReply, startVisitOpening } from "../lib/governance";
 interface AppState {
   activeUserRole: UserRole;
   governanceRules: typeof governanceRules;
+  governanceBlocks: typeof governanceBlocks;
   products: typeof products;
   documents: CompanyDocument[];
   avatars: AvatarConfig[];
@@ -105,6 +107,7 @@ function msg(
 export const useAppStore = create<AppState>((set, get) => ({
   activeUserRole: "sales-force-creator",
   governanceRules,
+  governanceBlocks,
   products,
   documents: seedDocuments,
   avatars,

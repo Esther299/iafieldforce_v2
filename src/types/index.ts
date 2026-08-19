@@ -1,3 +1,5 @@
+import type { LucideIcon } from "lucide-react";
+
 export type TargetAudience =
   | "covered_doctors"
   | "uncovered_doctors"
@@ -51,6 +53,13 @@ export interface GovernanceRule {
   description: string;
   enforced: boolean;
   priority: number;
+}
+
+export interface GovernanceBlocks {
+  title: string;
+  icon: LucideIcon;
+  description: string;
+  rules: string[];
 }
 
 export interface CompanyDocument {
