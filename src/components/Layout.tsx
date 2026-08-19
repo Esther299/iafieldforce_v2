@@ -33,13 +33,6 @@ const nav = [
   { to: "/creditos", label: "Créditos", icon: Wallet },
 ];
 
-const quickLinks = [
-  { to: "/academia", label: "Academia IA" },
-  { to: "/territorio", label: "Territorio VM" },
-  { to: "/visita", label: "Visita demo" },
-  { to: "/prueba", label: "Test de campaña" },
-];
-
 const roleOptions: Array<{ value: UserRole; label: string }> = [
   { value: "sales-force-creator", label: "Sales Force Creator" },
   { value: "marketing", label: "Marketing" },
@@ -47,6 +40,18 @@ const roleOptions: Array<{ value: UserRole; label: string }> = [
   { value: "operations", label: "Operations" },
   { value: "compliance", label: "Compliance" },
 ];
+
+// Mapeo de información de usuario según el rol activo
+const userInfoMap: Record<UserRole, { name: string; roleTitle: string }> = {
+  "sales-force-creator": {
+    name: "Esteban Abad",
+    roleTitle: "Sales Force Creator",
+  },
+  marketing: { name: "Esteban Abad", roleTitle: "Gerente de Marketing" },
+  commercial: { name: "Esteban Abad", roleTitle: "Gerente Comercial" },
+  operations: { name: "Esteban Abad", roleTitle: "Gerente de Operaciones" },
+  compliance: { name: "María José", roleTitle: "Gerente de Compliance" },
+};
 
 export function Layout() {
   const [open, setOpen] = useState(false);
@@ -59,6 +64,11 @@ export function Layout() {
   const showBalance =
     activeUserRole === "marketing" || activeUserRole === "commercial";
 
+  const currentUserInfo = userInfoMap[activeUserRole] || {
+    name: "Esteban Abad",
+    roleTitle: "Gerente de Marketing",
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-50/30 via-slate-50 to-white">
       <div className="mx-auto flex min-h-screen max-w-[1600px]">
@@ -70,17 +80,12 @@ export function Layout() {
         >
           <div className="mb-6 flex items-center justify-between px-1">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 text-sm font-bold text-white shadow-lg shadow-brand-900/30">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full border-[5px] border-[#1e3579] text-3xl font-black text-[#1e3579]">
                 ia
               </div>
-              <div>
-                <p className="font-display text-xl font-bold leading-none text-ink-900 tracking-tight">
-                  fieldforce
-                </p>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-brand-600">
-                  ia fieldforce
-                </p>
-              </div>
+              <span className="text-4xl font-black tracking-tight text-[#1e3579]">
+                fieldforce
+              </span>
             </div>
             <button
               className="rounded-lg p-1.5 text-ink-400 hover:bg-ink-100 hover:text-ink-700 md:hidden"
@@ -91,22 +96,15 @@ export function Layout() {
             </button>
           </div>
 
-          {showBalance && (
-            <div className="mb-5 overflow-hidden rounded-2xl bg-gradient-to-br from-brand-50 via-white to-emerald-50/50 p-4 shadow-sm ring-1 ring-brand-200/50">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-brand-700/80">
-                Saldo disponible
-              </p>
-              <p className="mt-0.5 text-2xl font-black text-brand-900">
-                ${balance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
-              </p>
-              <div className="mt-2 flex items-center gap-2">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                <span className="text-[11px] font-medium text-ink-500">
-                  Listo para enviar
-                </span>
-              </div>
-            </div>
-          )}
+          {/* Tarjeta de identificación del usuario con fondo gris azulado */}
+          <div className="mb-5 overflow-hidden rounded-2xl bg-slate-100 p-4 shadow-sm ring-1 ring-slate-200/60">
+            <p className="text-base font-bold text-slate-900">
+              {currentUserInfo.name}
+            </p>
+            <p className="mt-0.5 text-xs font-medium text-slate-600">
+              {currentUserInfo.roleTitle}
+            </p>
+          </div>
 
           <nav className="scrollbar-thin flex max-h-[calc(100vh-250px)] flex-col gap-1 overflow-y-auto pr-1">
             {nav.map((item) => (
@@ -119,7 +117,7 @@ export function Layout() {
                   cn(
                     "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
                     isActive
-                      ? "bg-brand-600 text-white shadow-md shadow-brand-900/20 ring-1 ring-brand-700/30"
+                      ? "bg-[#1e3579] text-white shadow-md shadow-brand-900/20 ring-1"
                       : "text-ink-600 hover:bg-ink-100/80 hover:text-ink-900",
                   )
                 }
