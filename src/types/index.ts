@@ -45,7 +45,25 @@ export type UserRole =
   | "commercial"
   | "operations"
   | "compliance";
-
+export type GlobalRegions =
+  | "África Septentrional (Norte)"
+  | "África Subsahariana"
+  | "América del Norte"
+  | "América Central y el Caribe"
+  | "América del Sur"
+  | "Asia Occidental (Oriente Medio)"
+  | "Asia Central"
+  | "Asia Meridional (Sur de Asia)"
+  | "Asia Oriental (Este de Asia)"
+  | "Sudeste Asiático"
+  | "Europa Occidental"
+  | "Europa Oriental (Este)"
+  | "Europa Septentrional (Norte)"
+  | "Europa Meridional (Sur)"
+  | "Australia y Nueva Zelanda"
+  | "Melanesia"
+  | "Micronesia"
+  | "Polinesia";
 
 export interface GovernanceRule {
   id: string;
@@ -107,6 +125,12 @@ export interface AvatarConfig {
   personality: string;
   photoGradient: string;
   active: boolean;
+  formador: string;
+  images: {
+    torso: string;
+    cuerpo: string;
+    prueba: string;
+  };
 }
 
 export interface RealRep {

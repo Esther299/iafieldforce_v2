@@ -1,8 +1,7 @@
-import { useState } from "react";
-import { Palette, Shirt, Sparkles, User, Users } from "lucide-react";
+import { useState, useRef } from "react";
+import { Palette, Shirt, Sparkles, User, Users, Upload } from "lucide-react";
 import { AvatarFace } from "../../components/AvatarFace";
 import {
-  Badge,
   Button,
   Card,
   Input,
@@ -11,7 +10,12 @@ import {
   Textarea,
 } from "../../components/ui";
 import { useAppStore } from "../../store/useAppStore";
-import type { AccentRegion, AvatarConfig, Gender } from "../../types";
+import type {
+  AccentRegion,
+  AvatarConfig,
+  Gender,
+  GlobalRegions,
+} from "../../types";
 
 const accents: AccentRegion[] = [
   "cdmx",
@@ -31,8 +35,7 @@ const gradients = [
   "from-amber-400 to-orange-700",
 ];
 
-// Opciones de regiones sincronizadas con el mapa mundial
-const globalRegions = [
+const globalRegions: GlobalRegions[] = [
   "África Septentrional (Norte)",
   "África Subsahariana",
   "América del Norte",
@@ -53,6 +56,14 @@ const globalRegions = [
   "Polinesia",
 ];
 
+const formadorOptions = [
+  "Médicos",
+  "Farmacias",
+  "Hospitales",
+  "Especialistas",
+  "General",
+];
+
 const initialFormState: AvatarConfig = {
   id: "",
   name: "",
@@ -65,25 +76,13 @@ const initialFormState: AvatarConfig = {
   personality: "amigable y cortés",
   photoGradient: gradients[0],
   active: true,
+  formador: "Médicos",
+  images: {
+    torso: "",
+    cuerpo: "",
+    prueba: "",
+  },
 };
-
-const audienceStyles = [
-  {
-    audience: "Médicos",
-    trainer: "Trainer 1",
-    description: "Estilo directivo, cercano y clínico para consultas médicas.",
-    style: "Visita técnica",
-    tone: "brand",
-  },
-  {
-    audience: "Farmacias",
-    trainer: "Trainer 4",
-    description:
-      "Estilo más amable y comercial para dependientes y boticarios.",
-    style: "Visita comercial",
-    tone: "success",
-  },
-];
 
 export function Reps() {
   const { upsertAvatar } = useAppStore();
@@ -91,9 +90,47 @@ export function Reps() {
   const [viewMode, setViewMode] = useState<"torso" | "cuerpo" | "prueba">(
     "torso",
   );
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setForm((prev) => ({
+          ...prev,
+          images: {
+            ...prev.images,
+            [viewMode]: reader.result as string,
+          },
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
   function save() {
-    if (!form.name.trim()) return;
+    const errors: string[] = [];
+
+    // Validaciones de campos de texto
+    if (!form.name.trim()) errors.push("Nombre");
+    if (!form.skinTone.trim()) errors.push("Tono de piel");
+    if (!form.traits.trim()) errors.push("Rasgos corporativos y de identidad");
+    if (!form.attire.trim()) errors.push("Vestimenta");
+    if (!form.personality.trim()) errors.push("Personalidad");
+
+    // Validaciones opcionales para comprobar que se subieron las 3 imágenes
+    if (!form.images.torso) errors.push("Imagen de Torso y Cara");
+    if (!form.images.cuerpo) errors.push("Imagen de Cuerpo Entero");
+    if (!form.images.prueba) errors.push("Imagen de Prueba");
+
+    if (errors.length > 0) {
+      alert(
+        `Por favor completa los siguientes campos obligatorios:\n\n• ${errors.join("\n• ")}`,
+      );
+      return;
+    }
+
     upsertAvatar({
       ...form,
       id: form.id || `av-${form.name.toLowerCase().replace(/\s+/g, "-")}`,
@@ -103,6 +140,7 @@ export function Reps() {
   }
 
   const previewAvatar = { ...initialFormState, ...form };
+  const currentImage = form.images[viewMode];
 
   return (
     <div className="space-y-6">
@@ -117,7 +155,7 @@ export function Reps() {
         <div className="grid gap-6 xl:grid-cols-[1.3fr_0.7fr]">
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <Label>Nombre</Label>
+              <Label>Nombre *</Label>
               <Input
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -165,8 +203,32 @@ export function Reps() {
                 ))}
               </Select>
             </div>
+            <div>
+              <Label>Formador</Label>
+              <Select
+                value={form.formador}
+                onChange={(e) => setForm({ ...form, formador: e.target.value })}
+              >
+                {formadorOptions.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </Select>
+            </div>
+            <div>
+              <Label>
+                <span className="flex items-center gap-1">
+                  <Palette size={12} /> Tono de piel *
+                </span>
+              </Label>
+              <Input
+                value={form.skinTone}
+                onChange={(e) => setForm({ ...form, skinTone: e.target.value })}
+              />
+            </div>
             <div className="md:col-span-2">
-              <Label>Rasgos corporativos y de identidad</Label>
+              <Label>Rasgos corporativos y de identidad *</Label>
               <Textarea
                 value={form.traits}
                 onChange={(e) => setForm({ ...form, traits: e.target.value })}
@@ -176,18 +238,7 @@ export function Reps() {
             <div>
               <Label>
                 <span className="flex items-center gap-1">
-                  <Palette size={12} /> Tono de piel
-                </span>
-              </Label>
-              <Input
-                value={form.skinTone}
-                onChange={(e) => setForm({ ...form, skinTone: e.target.value })}
-              />
-            </div>
-            <div>
-              <Label>
-                <span className="flex items-center gap-1">
-                  <Shirt size={12} /> Vestimenta
+                  <Shirt size={12} /> Vestimenta *
                 </span>
               </Label>
               <Input
@@ -196,10 +247,10 @@ export function Reps() {
                 placeholder="Ej. blazer corporativo"
               />
             </div>
-            <div className="md:col-span-2">
+            <div>
               <Label>
                 <span className="flex items-center gap-1">
-                  <Sparkles size={12} /> Personalidad
+                  <Sparkles size={12} /> Personalidad *
                 </span>
               </Label>
               <Input
@@ -213,46 +264,64 @@ export function Reps() {
 
           <div className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
             <div>
-              <div className="mb-3 flex items-center gap-2 text-brand-700">
-                <User size={16} />
-                <p className="text-[11px] font-bold uppercase tracking-[0.18em]">
-                  Vista previa del Avatar
-                </p>
+              <div className="mb-3 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-brand-700">
+                  <User size={16} />
+                  <p className="text-[11px] font-bold uppercase tracking-[0.18em]">
+                    Vista previa del Avatar
+                  </p>
+                </div>
               </div>
-              <div className="rounded-2xl border border-brand-100 bg-white p-6 text-center min-h-[240px] flex flex-col items-center justify-center shadow-sm">
-                <AvatarFace avatar={previewAvatar} size="lg" />
+
+              <div className="rounded-2xl border border-brand-100 bg-white p-6 text-center min-h-[240px] flex flex-col items-center justify-center shadow-sm relative overflow-hidden">
+                {currentImage ? (
+                  <img
+                    src={currentImage}
+                    alt={`Vista ${viewMode}`}
+                    className="w-32 h-32 object-cover rounded-xl shadow-md mb-2"
+                  />
+                ) : (
+                  <AvatarFace avatar={previewAvatar} size="lg" />
+                )}
                 <p className="mt-3 text-lg font-black text-slate-900">
                   {previewAvatar.name || "Sin nombre asignado"}
                 </p>
                 <p className="text-xs text-slate-500">
-                  {viewMode.toUpperCase()}
+                  {viewMode.toUpperCase()} - Formador:{" "}
+                  <span className="font-semibold">{form.formador}</span>
                 </p>
               </div>
             </div>
 
+            <div className="mt-4 flex items-center justify-center gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <Upload size={14} className="mr-2" /> Subir {viewMode}
+              </Button>
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                accept="image/*"
+                onChange={handleImageUpload}
+              />
+            </div>
+
             <div className="mt-4 space-y-3">
               <div className="flex items-center justify-center gap-2">
-                <Button
-                  size="sm"
-                  variant={viewMode === "torso" ? "primary" : "outline"}
-                  onClick={() => setViewMode("torso")}
-                >
-                  Torso y cara
-                </Button>
-                <Button
-                  size="sm"
-                  variant={viewMode === "cuerpo" ? "primary" : "outline"}
-                  onClick={() => setViewMode("cuerpo")}
-                >
-                  Cuerpo entero
-                </Button>
-                <Button
-                  size="sm"
-                  variant={viewMode === "prueba" ? "primary" : "outline"}
-                  onClick={() => setViewMode("prueba")}
-                >
-                  Prueba
-                </Button>
+                {(["torso", "cuerpo", "prueba"] as const).map((mode) => (
+                  <Button
+                    key={mode}
+                    size="sm"
+                    variant={viewMode === mode ? "primary" : "outline"}
+                    onClick={() => setViewMode(mode)}
+                  >
+                    {mode.charAt(0).toUpperCase() + mode.slice(1)}
+                  </Button>
+                ))}
               </div>
               <Button
                 onClick={save}
@@ -264,30 +333,6 @@ export function Reps() {
           </div>
         </div>
       </Card>
-
-      <div className="grid gap-4 md:grid-cols-2">
-        {audienceStyles.map((item) => (
-          <Card
-            key={item.audience}
-            className="border-slate-200/80 bg-white p-5 rounded-2xl shadow-sm"
-          >
-            <div className="flex items-center justify-between gap-2">
-              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-700">
-                {item.audience}
-              </p>
-              <Badge tone={item.tone as "brand" | "success"}>
-                {item.trainer}
-              </Badge>
-            </div>
-            <p className="mt-3 text-lg font-black text-slate-900">
-              {item.style}
-            </p>
-            <p className="mt-1 text-xs text-slate-600 leading-relaxed">
-              {item.description}
-            </p>
-          </Card>
-        ))}
-      </div>
     </div>
   );
 }

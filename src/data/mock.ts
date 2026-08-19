@@ -129,6 +129,12 @@ export const avatars: AvatarConfig[] = [
     personality: "Directo y profesional",
     photoGradient: "from-sky-400 to-indigo-700",
     active: true,
+    formador: "Médicos",
+    images: {
+      torso: "",
+      cuerpo: "",
+      prueba: "",
+    },
   },
   {
     id: "av-maria",
@@ -142,6 +148,12 @@ export const avatars: AvatarConfig[] = [
     personality: "Cercana y amigable",
     photoGradient: "from-rose-400 to-fuchsia-800",
     active: true,
+    formador: "Especialistas",
+    images: {
+      torso: "",
+      cuerpo: "",
+      prueba: "",
+    },
   },
   {
     id: "av-carlos",
@@ -155,6 +167,12 @@ export const avatars: AvatarConfig[] = [
     personality: "Dinámico",
     photoGradient: "from-teal-400 to-cyan-700",
     active: true,
+    formador: "Hospitales",
+    images: {
+      torso: "",
+      cuerpo: "",
+      prueba: "",
+    },
   },
   {
     id: "av-sofia",
@@ -168,6 +186,12 @@ export const avatars: AvatarConfig[] = [
     personality: "Persuasiva",
     photoGradient: "from-amber-400 to-orange-700",
     active: true,
+    formador: "Farmacias",
+    images: {
+      torso: "",
+      cuerpo: "",
+      prueba: "",
+    },
   },
 ];
 
