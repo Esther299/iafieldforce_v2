@@ -23,7 +23,7 @@ export function Credits() {
   const [amount, setAmount] = useState(1000);
 
   return (
-    <div className="animate-fade-up space-y-6">
+    <div className="animate-fade-up space-y-6 bg-sky-200 min-h-screen p-6">
       <PageHeader
         title="Modelo económico y créditos"
         subtitle="Instalación + saldo acreditado. La clave: costo muy bajo por VM enviada para masificar la comunicación."
@@ -40,7 +40,7 @@ export function Credits() {
               <Wallet size={18} />
             </div>
           </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
+          <p className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
             ${credits.balance.toLocaleString()}
           </p>
           <p className="mt-2 text-xs font-medium text-emerald-700/80">
@@ -57,7 +57,7 @@ export function Credits() {
               <DollarSign size={18} />
             </div>
           </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
+          <p className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
             ${credits.costPerVisit}
           </p>
           <p className="mt-2 text-xs font-medium text-blue-700/80">
@@ -74,7 +74,7 @@ export function Credits() {
               <TrendingUp size={18} />
             </div>
           </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
+          <p className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
             {credits.costPerCta ? `$${credits.costPerCta}` : "$0"}
           </p>
           <p className="mt-2 text-xs font-medium text-violet-700/80">
@@ -86,14 +86,14 @@ export function Credits() {
       {/* 2. GRILLA PRINCIPAL INTERACTIVA */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* COLUMNA IZQUIERDA: RECARGAR SALDO */}
-        <Card className="p-5 lg:col-span-1 border-ink-200/60 bg-gradient-to-br from-slate-50/40 via-white to-white shadow-sm flex flex-col justify-between">
+        <Card className="p-5 lg:col-span-1 border-slate-200/80 bg-white shadow-sm rounded-2xl flex flex-col justify-between">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <p className="text-xs font-bold uppercase tracking-wider text-ink-700 flex items-center gap-1.5">
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
                 <Sparkles size={14} className="text-brand-600" />
                 Recargar saldo
               </p>
-              <span className="text-[11px] text-ink-400 italic">
+              <span className="text-[11px] text-slate-400 italic">
                 Créditos inmediatos
               </span>
             </div>
@@ -119,7 +119,7 @@ export function Credits() {
                     className={`flex-1 text-[10px] font-bold py-1 rounded-lg border transition-all ${
                       amount === preset
                         ? "bg-brand-600 text-white border-brand-600 shadow-sm"
-                        : "bg-white text-ink-600 border-ink-200 hover:border-brand-300"
+                        : "bg-white text-slate-600 border-slate-200 hover:border-brand-300"
                     }`}
                   >
                     ${preset}
@@ -137,8 +137,8 @@ export function Credits() {
             </div>
           </div>
 
-          <div className="mt-6 space-y-2 rounded-2xl bg-gradient-to-br from-slate-50 to-brand-50/30 p-4 text-xs text-ink-600 border border-ink-100">
-            <p className="font-bold text-ink-900 flex items-center gap-1.5">
+          <div className="mt-6 space-y-2 rounded-2xl bg-gradient-to-br from-slate-50 to-brand-50/30 p-4 text-xs text-slate-600 border border-slate-200">
+            <p className="font-bold text-slate-900 flex items-center gap-1.5">
               <Building2 size={14} className="text-brand-600" />
               Estructura de cobro
             </p>
@@ -150,20 +150,20 @@ export function Credits() {
         </Card>
 
         {/* COLUMNA DERECHA: MOVIMIENTOS Y TRANSACCIONES */}
-        <Card className="lg:col-span-2 border-ink-200/60 bg-gradient-to-br from-slate-50/40 via-white to-white shadow-sm overflow-hidden">
-          <div className="flex items-center justify-between border-b border-ink-100 px-5 py-4 bg-gradient-to-r from-ink-50/50 to-white">
+        <Card className="lg:col-span-2 border-slate-200/80 bg-white shadow-sm rounded-2xl overflow-hidden">
+          <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4 bg-gradient-to-r from-slate-50/50 to-white">
             <div className="flex items-center gap-2">
               <Receipt size={16} className="text-brand-600" />
-              <h3 className="text-xs font-bold uppercase tracking-wider text-ink-700">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700">
                 Historial de movimientos
               </h3>
             </div>
             <Badge tone="brand">{credits.transactions.length} registros</Badge>
           </div>
 
-          <div className="divide-y divide-ink-100 max-h-[420px] overflow-y-auto">
+          <div className="divide-y divide-slate-100 max-h-[420px] overflow-y-auto">
             {credits.transactions.length === 0 ? (
-              <div className="px-5 py-8 text-center text-xs text-ink-400 italic">
+              <div className="px-5 py-8 text-center text-xs text-slate-400 italic">
                 No hay movimientos registrados en este período.
               </div>
             ) : (
@@ -173,8 +173,10 @@ export function Credits() {
                   className="flex items-center justify-between gap-3 px-5 py-3.5 transition-all duration-200 hover:bg-slate-50/80 hover:-translate-x-0.5 cursor-pointer"
                 >
                   <div className="space-y-0.5">
-                    <p className="text-sm font-bold text-ink-900">{t.label}</p>
-                    <p className="text-xs text-ink-400 font-medium">{t.at}</p>
+                    <p className="text-sm font-bold text-slate-900">
+                      {t.label}
+                    </p>
+                    <p className="text-xs text-slate-400 font-medium">{t.at}</p>
                   </div>
                   <div className="text-right space-y-1">
                     <p

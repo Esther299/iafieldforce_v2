@@ -250,7 +250,7 @@ export function Campaigns() {
   }
 
   return (
-    <div className="animate-fade-up space-y-6">
+    <div className="animate-fade-up space-y-6 bg-sky-200 min-h-screen p-6">
       <PageHeader
         title="Campañas"
         subtitle="Script exacto del gerente de producto · prueba interna · go final · envío WhatsApp / email / SMS."
@@ -293,21 +293,21 @@ export function Campaigns() {
               key={c.id}
               interactive
               onClick={() => setSelectedCampaignModal(c)}
-              className={`relative overflow-hidden border bg-gradient-to-br ${cardStyle} p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-md flex flex-col justify-between`}
+              className={`relative overflow-hidden border bg-gradient-to-br ${cardStyle} p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-md rounded-2xl shadow-sm flex flex-col justify-between`}
             >
               <div>
                 <div className="flex items-start justify-between gap-2">
                   <Badge tone={statusTone[c.status]}>{c.status}</Badge>
-                  <span className="text-[11px] font-bold tracking-wider uppercase text-ink-400 bg-white/80 px-2 py-0.5 rounded-md border border-ink-100">
+                  <span className="text-[11px] font-bold tracking-wider uppercase text-slate-400 bg-white/80 px-2 py-0.5 rounded-md border border-slate-100">
                     {c.cycle}
                   </span>
                 </div>
 
                 <div className="mt-3">
-                  <h3 className="text-lg font-extrabold text-ink-900 tracking-tight leading-snug">
+                  <h3 className="text-lg font-extrabold text-slate-900 tracking-tight leading-snug">
                     {c.name}
                   </h3>
-                  <p className="mt-1 text-xs text-ink-500 flex items-center gap-1">
+                  <p className="mt-1 text-xs text-slate-500 flex items-center gap-1">
                     <Target size={13} className="text-brand-600 shrink-0" />
                     <span className="capitalize">
                       {c.audience.replaceAll("_", " ")}
@@ -315,14 +315,14 @@ export function Campaigns() {
                   </p>
                 </div>
 
-                <div className="mt-3 rounded-xl bg-white/70 p-2.5 border border-ink-100/80 space-y-1 text-xs">
-                  <p className="flex justify-between text-ink-600">
+                <div className="mt-3 rounded-xl bg-white/70 p-2.5 border border-slate-100/80 space-y-1 text-xs">
+                  <p className="flex justify-between text-slate-600">
                     <span>Producto:</span>
-                    <strong className="text-ink-900">
+                    <strong className="text-slate-900">
                       {product?.name || "N/A"}
                     </strong>
                   </p>
-                  <p className="flex justify-between text-ink-600">
+                  <p className="flex justify-between text-slate-600">
                     <span>Avatar asignado:</span>
                     <strong className="text-brand-700">
                       {avatar?.name || "N/A"}
@@ -331,7 +331,7 @@ export function Campaigns() {
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-ink-100/80 flex items-center justify-between text-xs font-bold text-brand-700">
+              <div className="mt-4 pt-3 border-t border-slate-100/80 flex items-center justify-between text-xs font-bold text-brand-700">
                 <span>Ver ficha & configuración</span>
                 <span>→</span>
               </div>
@@ -340,7 +340,7 @@ export function Campaigns() {
         })}
       </div>
 
-      {/* MODAL 1: FICHA DINÁMICA DE DETALLES DE CAMPAÑA (ANCHO MUY GRANDE: max-w-5xl ~ 1024px) */}
+      {/* MODAL 1: FICHA DINÁMICA DE DETALLES DE CAMPAÑA */}
       <Modal
         isOpen={selectedCampaignModal !== null}
         onClose={() => setSelectedCampaignModal(null)}
@@ -450,8 +450,8 @@ export function Campaigns() {
                 </div>
 
                 {/* Filtros CRM */}
-                <div className="rounded-2xl border border-ink-100 p-4 space-y-2">
-                  <p className="text-xs font-bold uppercase tracking-wider text-ink-400">
+                <div className="rounded-2xl border border-slate-200/80 p-4 space-y-2">
+                  <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
                     Filtros CRM Aplicados
                   </p>
                   <div className="flex flex-wrap gap-1.5 text-xs">
@@ -524,8 +524,8 @@ export function Campaigns() {
               </div>
 
               {/* COLUMNA DERECHA: Script Detallado */}
-              <div className="rounded-2xl border border-ink-200/80 bg-white p-4 space-y-2.5">
-                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-brand-800 border-b border-ink-100 pb-2">
+              <div className="rounded-2xl border border-slate-200/80 bg-white p-4 space-y-2.5">
+                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-brand-800 border-b border-slate-100 pb-2">
                   <MessageSquare size={14} /> Script Aprobado (Gerente de
                   Producto)
                 </div>
@@ -553,7 +553,7 @@ export function Campaigns() {
             </div>
 
             {/* BOTÓN ELIMINAR CAMPAÑA */}
-            <div className="pt-4 border-t border-ink-100 flex justify-between items-center">
+            <div className="pt-4 border-t border-slate-100 flex justify-between items-center">
               <Button
                 variant="danger"
                 size="sm"
@@ -573,7 +573,7 @@ export function Campaigns() {
         )}
       </Modal>
 
-      {/* MODAL 2: FORMULARIO COMPLETO PARA CREAR CAMPAÑA (ANCHO MUY GRANDE: max-w-5xl ~ 1024px) */}
+      {/* MODAL 2: FORMULARIO COMPLETO PARA CREAR CAMPAÑA */}
       <Modal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
@@ -594,10 +594,10 @@ export function Campaigns() {
                   onClick={() => applyDraft(draft)}
                   className="rounded-xl border border-brand-200 bg-white p-3 text-left text-xs transition-all hover:border-brand-500 hover:shadow-sm"
                 >
-                  <p className="font-bold text-ink-900 line-clamp-1">
+                  <p className="font-bold text-slate-900 line-clamp-1">
                     {draft.title}
                   </p>
-                  <p className="text-[10px] text-ink-500 capitalize mt-0.5">
+                  <p className="text-[10px] text-slate-500 capitalize mt-0.5">
                     {draft.audience.replaceAll("_", " ")}
                   </p>
                 </button>
@@ -691,7 +691,7 @@ export function Campaigns() {
 
             {/* COLUMNA DERECHA: CONFIGURACIÓN SCRIPT */}
             <div className="space-y-3">
-              <p className="text-xs font-bold uppercase tracking-wider text-ink-400 flex items-center gap-1">
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
                 <FileText size={14} /> Script (Gerente de Producto)
               </p>
 
@@ -758,7 +758,7 @@ export function Campaigns() {
           </div>
 
           {/* ACCIONES DEL MODAL DE CREACIÓN */}
-          <div className="pt-4 flex items-center gap-2 justify-end border-t border-ink-100">
+          <div className="pt-4 flex items-center gap-2 justify-end border-t border-slate-100">
             <Button
               variant="outline"
               onClick={() => setIsCreateModalOpen(false)}
@@ -814,7 +814,7 @@ function ScriptLine({ k, v }: { k: string; v: string }) {
       <p className="text-[11px] font-bold text-brand-800 uppercase tracking-wide">
         {k}
       </p>
-      <p className="text-xs text-ink-700 bg-slate-50 p-2 rounded-lg border border-slate-100 leading-relaxed mt-0.5">
+      <p className="text-xs text-slate-700 bg-slate-50 p-2 rounded-lg border border-slate-100 leading-relaxed mt-0.5">
         {v}
       </p>
     </div>

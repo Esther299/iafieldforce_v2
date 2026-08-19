@@ -73,7 +73,7 @@ export function Crm() {
   ];
 
   return (
-    <div className="animate-fade-up space-y-6">
+    <div className="animate-fade-up space-y-6 bg-sky-200 min-h-screen p-6">
       <PageHeader
         title="CRM y audiencias"
         subtitle="Conexión con el CRM del laboratorio: segmentación médica, cobertura de visitadores reales y red de dependientes de farmacia."
@@ -97,7 +97,7 @@ export function Crm() {
               <Users size={20} />
             </div>
           </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
+          <p className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
             {doctors.length}
           </p>
           <p className="mt-2 text-xs font-medium text-blue-700/80">
@@ -121,7 +121,7 @@ export function Crm() {
               <UserCheck size={20} />
             </div>
           </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
+          <p className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
             {doctors.filter((d) => d.covered).length}
           </p>
           <p className="mt-2 text-xs font-medium text-emerald-700/80">
@@ -145,7 +145,7 @@ export function Crm() {
               <UserX size={20} />
             </div>
           </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
+          <p className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
             {doctors.filter((d) => !d.covered).length}
           </p>
           <p className="mt-2 text-xs font-medium text-amber-700/80">
@@ -162,7 +162,7 @@ export function Crm() {
               <Store size={20} />
             </div>
           </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
+          <p className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
             {pharmacyStaff.length}
           </p>
           <p className="mt-2 text-xs font-medium text-violet-700/80">
@@ -174,10 +174,10 @@ export function Crm() {
       {/* 2. VISITADORES REALES (ESTÁTICOS SIN HOVER) */}
       <div className="space-y-3">
         <div className="flex items-center justify-between px-1">
-          <p className="text-xs font-bold uppercase tracking-wider text-ink-400">
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
             Visitadores Médicos Reales (Fuerza de Ventas)
           </p>
-          <span className="text-xs text-ink-500 font-medium">
+          <span className="text-xs text-slate-500 font-medium">
             Soporte complementario con VM Digital
           </span>
         </div>
@@ -192,14 +192,14 @@ export function Crm() {
             return (
               <Card
                 key={r.id}
-                className={`relative overflow-hidden border bg-gradient-to-br ${cardStyle} p-5 shadow-sm`}
+                className={`relative overflow-hidden border bg-gradient-to-br ${cardStyle} p-5 shadow-sm rounded-2xl`}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <p className="text-base font-extrabold text-ink-900 tracking-tight">
+                    <p className="text-base font-extrabold text-slate-900 tracking-tight">
                       {r.name}
                     </p>
-                    <p className="text-xs font-semibold text-ink-500 flex items-center gap-1 mt-0.5">
+                    <p className="text-xs font-semibold text-slate-500 flex items-center gap-1 mt-0.5">
                       <MapPin size={12} className="text-brand-600" />
                       {r.territory}
                     </p>
@@ -223,13 +223,13 @@ export function Crm() {
       </div>
 
       {/* 3. BASE MÉDICA CON BURBUJAS QUE NO SE CORTAN EN LOS BORDES */}
-      <Card className="border-ink-200/60 relative overflow-visible">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-ink-100 bg-gradient-to-r from-ink-50/60 to-white px-6 py-4 rounded-t-2xl">
+      <Card className="border-slate-200/80 relative overflow-visible rounded-2xl shadow-sm bg-white">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 bg-slate-50/70 px-6 py-4 rounded-t-2xl">
           <div>
-            <h3 className="text-sm font-bold text-ink-900 uppercase tracking-wide">
+            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide">
               Base médica segmentada
             </h3>
-            <p className="text-xs text-ink-500 mt-0.5">
+            <p className="text-xs text-slate-500 mt-0.5">
               Haz clic en la flecha para ver la ficha completa.
             </p>
           </div>
@@ -238,7 +238,7 @@ export function Crm() {
             <div className="relative w-full sm:w-64">
               <Search
                 size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-400"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
               />
               <Input
                 placeholder="Buscar por nombre, zona o esp..."
@@ -260,7 +260,7 @@ export function Crm() {
 
         <div className="overflow-visible">
           <table className="min-w-full text-left text-sm">
-            <thead className="bg-slate-50 text-[11px] font-bold uppercase tracking-wider text-ink-500 border-b border-ink-100">
+            <thead className="bg-slate-50 text-[11px] font-bold uppercase tracking-wider text-slate-500 border-b border-slate-100">
               <tr>
                 <th className="px-6 py-3">Médico</th>
                 <th className="px-4 py-3">Especialidad</th>
@@ -271,12 +271,12 @@ export function Crm() {
                 <th className="px-4 py-3 text-right">Ficha</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-ink-100">
+            <tbody className="divide-y divide-slate-100">
               {filteredDoctors.length === 0 ? (
                 <tr>
                   <td
                     colSpan={7}
-                    className="px-6 py-8 text-center text-ink-500"
+                    className="px-6 py-8 text-center text-slate-500"
                   >
                     No se encontraron médicos con los criterios especificados.
                   </td>
@@ -298,17 +298,17 @@ export function Crm() {
                       className="hover:bg-slate-50/80 transition-colors duration-150"
                     >
                       <td className="px-6 py-3.5">
-                        <p className="font-bold text-ink-900">
+                        <p className="font-bold text-slate-900">
                           {d.title} {d.name}
                         </p>
-                        <p className="text-xs text-ink-400">
+                        <p className="text-xs text-slate-400">
                           {d.email ?? d.phone ?? "Sin contacto directo"}
                         </p>
                       </td>
-                      <td className="px-4 py-3.5 text-xs text-ink-700 font-medium">
+                      <td className="px-4 py-3.5 text-xs text-slate-700 font-medium">
                         {d.specialty}
                       </td>
-                      <td className="px-4 py-3.5 text-xs text-ink-600">
+                      <td className="px-4 py-3.5 text-xs text-slate-600">
                         {d.zone}
                       </td>
                       <td className="px-4 py-3.5">
@@ -318,7 +318,7 @@ export function Crm() {
                           <Badge tone="warn">No alcanzado</Badge>
                         )}
                       </td>
-                      <td className="px-4 py-3.5 text-xs font-semibold text-ink-700">
+                      <td className="px-4 py-3.5 text-xs font-semibold text-slate-700">
                         {rep?.name ?? "—"}
                       </td>
                       <td className="px-4 py-3.5">
@@ -336,7 +336,7 @@ export function Crm() {
                           onClick={() =>
                             setActiveDoctorId(isPopOpen ? null : d.id)
                           }
-                          className="p-1.5 rounded-lg hover:bg-slate-200 text-ink-500 hover:text-brand-600 transition-colors relative"
+                          className="p-1.5 rounded-lg hover:bg-slate-200 text-slate-500 hover:text-brand-600 transition-colors relative"
                           title="Ver ficha"
                         >
                           <ChevronRight size={18} />
@@ -346,9 +346,9 @@ export function Crm() {
                           <div
                             className={`absolute right-2 z-50 w-72 rounded-2xl border border-brand-200 bg-white p-4 shadow-2xl text-left animate-fade-up ${popoverPositionClass}`}
                           >
-                            <div className="flex items-start justify-between gap-2 border-b border-ink-100 pb-2 mb-2">
+                            <div className="flex items-start justify-between gap-2 border-b border-slate-100 pb-2 mb-2">
                               <div>
-                                <p className="font-bold text-xs text-ink-900">
+                                <p className="font-bold text-xs text-slate-900">
                                   {d.title} {d.name}
                                 </p>
                                 <p className="text-[10px] text-brand-700 font-semibold">
@@ -357,13 +357,13 @@ export function Crm() {
                               </div>
                               <button
                                 onClick={() => setActiveDoctorId(null)}
-                                className="text-ink-400 hover:text-ink-700 p-0.5"
+                                className="text-slate-400 hover:text-slate-700 p-0.5"
                               >
                                 <X size={14} />
                               </button>
                             </div>
 
-                            <div className="space-y-2 text-[11px] text-ink-700">
+                            <div className="space-y-2 text-[11px] text-slate-700">
                               <div className="flex items-center gap-1.5">
                                 <Stethoscope
                                   size={13}
@@ -371,7 +371,7 @@ export function Crm() {
                                 />
                                 <span>
                                   Estado:{" "}
-                                  <strong className="text-ink-900">
+                                  <strong className="text-slate-900">
                                     {d.covered ? "Cubierto" : "No alcanzado"}
                                   </strong>
                                 </span>
@@ -379,14 +379,14 @@ export function Crm() {
 
                               {d.email && (
                                 <div className="flex items-center gap-1.5">
-                                  <Mail size={13} className="text-ink-400" />
+                                  <Mail size={13} className="text-slate-400" />
                                   <span className="truncate">{d.email}</span>
                                 </div>
                               )}
 
                               {d.phone && (
                                 <div className="flex items-center gap-1.5">
-                                  <Phone size={13} className="text-ink-400" />
+                                  <Phone size={13} className="text-slate-400" />
                                   <span>{d.phone}</span>
                                 </div>
                               )}
@@ -404,7 +404,7 @@ export function Crm() {
                               )}
 
                               {d.lastVisitSummary && (
-                                <p className="mt-2 text-[10px] text-ink-600 bg-slate-50 p-2 rounded-lg border border-slate-100 italic">
+                                <p className="mt-2 text-[10px] text-slate-600 bg-slate-50 p-2 rounded-lg border border-slate-100 italic">
                                   "{d.lastVisitSummary}"
                                 </p>
                               )}
@@ -422,17 +422,17 @@ export function Crm() {
       </Card>
 
       {/* 4. RED DE FARMACIA */}
-      <Card className="border-ink-200/60 relative overflow-visible">
-        <div className="border-b border-ink-100 bg-gradient-to-r from-ink-50/60 to-white px-6 py-4 rounded-t-2xl">
-          <h3 className="text-sm font-bold text-ink-900 uppercase tracking-wide">
+      <Card className="border-slate-200/80 relative overflow-visible rounded-2xl shadow-sm bg-white">
+        <div className="border-b border-slate-100 bg-slate-50/70 px-6 py-4 rounded-t-2xl">
+          <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide">
             Red de Personal de Farmacia
           </h3>
-          <p className="text-xs text-ink-500 mt-0.5">
+          <p className="text-xs text-slate-500 mt-0.5">
             Haz clic en la flecha para ver el resumen de capacitación.
           </p>
         </div>
 
-        <div className="divide-y divide-ink-100 overflow-visible">
+        <div className="divide-y divide-slate-100 overflow-visible">
           {pharmacyStaff.map((p, index) => {
             const isPopOpen = activePharmacyId === p.id;
             const isFirst = index === 0;
@@ -452,8 +452,8 @@ export function Crm() {
                     <Store size={18} />
                   </div>
                   <div>
-                    <p className="font-bold text-ink-900">{p.name}</p>
-                    <p className="text-xs text-ink-500">
+                    <p className="font-bold text-slate-900">{p.name}</p>
+                    <p className="text-xs text-slate-500">
                       {p.pharmacy} · {p.city} ·{" "}
                       <span className="italic">{p.role}</span>
                     </p>
@@ -468,7 +468,7 @@ export function Crm() {
                       onClick={() =>
                         setActivePharmacyId(isPopOpen ? null : p.id)
                       }
-                      className="p-1.5 rounded-lg hover:bg-slate-200 text-ink-500 hover:text-violet-600 transition-colors"
+                      className="p-1.5 rounded-lg hover:bg-slate-200 text-slate-500 hover:text-violet-600 transition-colors"
                     >
                       <ChevronRight size={18} />
                     </button>
@@ -478,18 +478,18 @@ export function Crm() {
                         className={`absolute right-0 z-50 w-64 rounded-2xl border border-violet-200 bg-white p-4 shadow-2xl text-left animate-fade-up ${popoverPositionClass}`}
                       >
                         <div className="flex items-center justify-between border-b border-slate-100 pb-2 mb-2">
-                          <p className="font-bold text-xs text-ink-900">
+                          <p className="font-bold text-xs text-slate-900">
                             {p.pharmacy}
                           </p>
                           <button
                             onClick={() => setActivePharmacyId(null)}
-                            className="text-ink-400 hover:text-ink-700"
+                            className="text-slate-400 hover:text-slate-700"
                           >
                             <X size={14} />
                           </button>
                         </div>
 
-                        <div className="space-y-2 text-[11px] text-ink-700">
+                        <div className="space-y-2 text-[11px] text-slate-700">
                           <div className="flex items-center gap-1.5">
                             <Building2 size={13} className="text-violet-600" />
                             <span>{p.city}</span>
@@ -513,15 +513,15 @@ export function Crm() {
       </Card>
 
       {/* 5. CRITERIOS DE SEGMENTACIÓN (TARJETAS CON BURBUJAS JUSTO DEBAJO) */}
-      <Card className="p-6 border-ink-200/60 bg-gradient-to-br from-slate-50/60 via-white to-brand-50/20 relative overflow-visible">
+      <Card className="p-6 border-slate-200/80 bg-white shadow-sm rounded-2xl relative overflow-visible">
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2 text-ink-900">
+          <div className="flex items-center gap-2 text-slate-900">
             <Target size={18} className="text-brand-600" />
-            <h3 className="text-xs font-bold uppercase tracking-wider text-ink-700">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700">
               Criterios de segmentación activos en campañas
             </h3>
           </div>
-          <span className="text-[11px] text-ink-400 italic">
+          <span className="text-[11px] text-slate-400 italic">
             Selecciona para ver apertura
           </span>
         </div>
@@ -541,14 +541,16 @@ export function Crm() {
                   className={`rounded-xl border p-3.5 shadow-sm transition-all duration-200 cursor-pointer bg-white relative z-10 ${
                     isSelected
                       ? "border-brand-500 ring-2 ring-brand-500/20 shadow-md"
-                      : "border-ink-200/80 hover:border-brand-300"
+                      : "border-slate-200/80 hover:border-brand-300"
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <p className="font-bold text-xs text-ink-900">{c.name}</p>
+                    <p className="font-bold text-xs text-slate-900">{c.name}</p>
                     <Info
                       size={14}
-                      className={isSelected ? "text-brand-600" : "text-ink-300"}
+                      className={
+                        isSelected ? "text-brand-600" : "text-slate-300"
+                      }
                     />
                   </div>
                   <p className="text-[11px] text-brand-700 capitalize mt-0.5">
@@ -577,7 +579,7 @@ export function Crm() {
                           <span className="h-2 w-2 rounded-full bg-brand-600 animate-pulse" />
                           Apertura configurada:
                         </p>
-                        <p className="text-[11px] text-ink-700 italic bg-brand-50/50 p-2 rounded-lg border border-brand-100 leading-snug">
+                        <p className="text-[11px] text-slate-700 italic bg-brand-50/50 p-2 rounded-lg border border-brand-100 leading-snug">
                           "{c.script.opening}"
                         </p>
                       </div>
@@ -586,7 +588,7 @@ export function Crm() {
                           e.stopPropagation();
                           setSelectedCampaignId(null);
                         }}
-                        className="rounded-lg p-0.5 text-ink-400 hover:text-ink-700 transition-colors"
+                        className="rounded-lg p-0.5 text-slate-400 hover:text-slate-700 transition-colors"
                       >
                         <X size={13} />
                       </button>

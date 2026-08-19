@@ -46,7 +46,7 @@ export function Analytics() {
     : analytics.bySpecialty;
 
   return (
-    <div className="animate-fade-up space-y-6">
+    <div className="animate-fade-up space-y-6 bg-sky-200 min-h-screen p-6">
       <PageHeader
         title="Analítica de campaña"
         subtitle="Reach real (click al link), engagement, CTAs, muestras y desempeño por canal y especialidad."
@@ -79,7 +79,7 @@ export function Analytics() {
               <Send size={18} />
             </div>
           </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
+          <p className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
             {analytics.sent}
           </p>
           <p className="mt-2 text-xs font-medium text-blue-700/80">
@@ -96,7 +96,7 @@ export function Analytics() {
               <Users size={18} />
             </div>
           </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
+          <p className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
             {analytics.opened}
           </p>
           <p className="mt-2 text-xs font-medium text-emerald-700/80">
@@ -113,7 +113,7 @@ export function Analytics() {
               <TrendingUp size={18} />
             </div>
           </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
+          <p className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
             {analytics.engaged}
           </p>
           <p className="mt-2 text-xs font-medium text-violet-700/80">
@@ -130,7 +130,7 @@ export function Analytics() {
               <MousePointerClick size={18} />
             </div>
           </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
+          <p className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
             {analytics.ctaClicks}
           </p>
           <p className="mt-2 text-xs font-medium text-amber-700/80">
@@ -147,7 +147,7 @@ export function Analytics() {
               <PackageOpen size={18} />
             </div>
           </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
+          <p className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
             {analytics.samplesRequested}
           </p>
           <p className="mt-2 text-xs font-medium text-teal-700/80">
@@ -161,14 +161,14 @@ export function Analytics() {
         {/* GRÁFICO 1: Aperturas y CTAs (diario) */}
         <Card
           interactive
-          className="p-5 border-ink-200/60 bg-gradient-to-br from-slate-50/40 via-white to-white shadow-sm"
+          className="p-5 border-slate-200/80 bg-white rounded-2xl shadow-sm"
         >
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs font-bold uppercase tracking-wider text-ink-700 flex items-center gap-1.5">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
               <Sparkles size={14} className="text-brand-600" />
               Aperturas y CTAs (diario)
             </p>
-            <span className="text-[11px] text-ink-400 italic">
+            <span className="text-[11px] text-slate-400 italic">
               Evolución temporal
             </span>
           </div>
@@ -206,10 +206,10 @@ export function Analytics() {
         {/* GRÁFICO 2: Por canal (Interactivo con opción "Todos") */}
         <Card
           interactive
-          className="p-5 border-ink-200/60 bg-gradient-to-br from-slate-50/40 via-white to-white shadow-sm"
+          className="p-5 border-slate-200/80 bg-white rounded-2xl shadow-sm"
         >
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs font-bold uppercase tracking-wider text-ink-700 flex items-center gap-1.5">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
               <Layers size={14} className="text-brand-600" />
               Desempeño por canal{" "}
               {selectedChannel && (
@@ -224,7 +224,7 @@ export function Analytics() {
                 className={`text-[10px] font-bold px-2 py-0.5 rounded-full border transition-all ${
                   selectedChannel === null
                     ? "bg-brand-600 text-white border-brand-600 shadow-sm"
-                    : "bg-white text-ink-600 border-ink-200 hover:border-brand-300"
+                    : "bg-white text-slate-600 border-slate-200 hover:border-brand-300"
                 }`}
               >
                 Todos
@@ -240,7 +240,7 @@ export function Analytics() {
                   className={`text-[10px] font-bold px-2 py-0.5 rounded-full border transition-all ${
                     selectedChannel === c.channel
                       ? "bg-brand-600 text-white border-brand-600 shadow-sm"
-                      : "bg-white text-ink-600 border-ink-200 hover:border-brand-300"
+                      : "bg-white text-slate-600 border-slate-200 hover:border-brand-300"
                   }`}
                 >
                   {c.channel}
@@ -276,10 +276,10 @@ export function Analytics() {
         {/* GRÁFICO 3: Aperturas por especialidad / farmacia (Con opción "Todas") */}
         <Card
           interactive
-          className="p-5 lg:col-span-2 border-ink-200/60 bg-gradient-to-br from-slate-50/40 via-white to-white shadow-sm"
+          className="p-5 lg:col-span-2 border-slate-200/80 bg-white rounded-2xl shadow-sm"
         >
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs font-bold uppercase tracking-wider text-ink-700 flex items-center gap-1.5">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
               <Stethoscope size={14} className="text-brand-600" />
               Aperturas por especialidad / farmacia
             </p>
@@ -289,7 +289,7 @@ export function Analytics() {
                 className={`text-[10px] font-bold px-2 py-0.5 rounded-full border transition-all ${
                   selectedSpecialty === null
                     ? "bg-brand-700 text-white border-brand-700 shadow-sm"
-                    : "bg-white text-ink-600 border-ink-200 hover:border-brand-300"
+                    : "bg-white text-slate-600 border-slate-200 hover:border-brand-300"
                 }`}
               >
                 Todas
@@ -305,7 +305,7 @@ export function Analytics() {
                   className={`text-[10px] font-bold px-2 py-0.5 rounded-full border transition-all ${
                     selectedSpecialty === s.specialty
                       ? "bg-brand-700 text-white border-brand-700 shadow-sm"
-                      : "bg-white text-ink-600 border-ink-200 hover:border-brand-300"
+                      : "bg-white text-slate-600 border-slate-200 hover:border-brand-300"
                   }`}
                 >
                   {s.specialty}
