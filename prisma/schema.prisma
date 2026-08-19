@@ -1,0 +1,340 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // Puedes cambiarlo a "mysql" o "sqlite" si lo prefieres
+  url      = env("DATABASE_URL")
+}
+
+// ==========================================
+// ENUMS
+// ==========================================
+
+enum TargetAudience {
+  covered_doctors
+  uncovered_doctors
+  pharmacy_staff
+  avatar_trainer
+}
+
+enum Channel {
+  whatsapp
+  email
+  sms
+}
+
+enum CampaignStatus {
+  draft
+  testing
+  approved
+  live
+  paused
+  completed
+}
+
+enum DocType {
+  product_profile
+  prescribing_info
+  clinical_study
+  visual_aid
+  campaign_script
+  legal
+  medical
+  training
+}
+
+enum EscalationDept {
+  medico
+  legal
+  regulatorio
+  comercial
+}
+
+enum Gender {
+  femenino
+  masculino
+  neutro
+}
+
+enum AccentRegion {
+  cdmx
+  norte
+  bajio
+  sur
+  caribe
+  andino
+  rioplatense
+  neutro
+}
+
+enum MessageRole {
+  avatar
+  user
+  system
+}
+
+enum TransactionType {
+  topup
+  visit
+  cta
+  setup
+}
+
+// ==========================================
+// 1. CRM & DIRECTORY
+// ==========================================
+
+model RealRep {
+  id             String   @id @default(uuid())
+  name           String
+  territory      String
+  specialtyFocus String[] // Array de strings soportado de forma nativa en PostgreSQL
+  
+  // Relaciones
+  doctors        Doctor[]
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Doctor {
+  id               String   @id @default(uuid())
+  name             String
+  title            String
+  specialty        String
+  city             String
+  zone             String
+  covered          Boolean  @default(false)
+  birthday         DateTime?
+  phone            String?
+  email            String?
+  lastVisitSummary String?  @db.Text
+  tags             String[]
+
+  // Relaciones
+  realRepId        String?
+  realRep          RealRep? @relation(fields: [realRepId], references: [id])
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model PharmacyStaff {
+  id        String   @id @default(uuid())
+  name      String
+  pharmacy  String
+  city      String
+  role      String
+  phone     String?
+  email     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==========================================
+// 2. CATALOG & KNOWLEDGE BASE
+// ==========================================
+
+model Product {
+  id              String   @id @default(uuid())
+  name            String
+  brand           String
+  molecule        String
+  therapeuticArea String
+  indication      String
+  keyMessages     String[]
+  studies         String[]
+  sampleAvailable Boolean  @default(false)
+
+  // Relaciones
+  documents       CompanyDocument[]
+  campaigns       CampaignProduct[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model CompanyDocument {
+  id         String   @id @default(uuid())
+  title      String
+  type       DocType
+  content    String   @db.Text
+  tags       String[]
+  version    String
+  approved   Boolean  @default(false)
+
+  // Relaciones
+  productId  String?
+  product    Product? @relation(fields: [productId], references: [id])
+  // NOTA: Se podría agregar relación opcional con Campaign si es necesario
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model GovernanceRule {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @db.Text
+  enforced    Boolean  @default(true)
+  priority    Int      @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ==========================================
+// 3. AI AVATARS
+// ==========================================
+
+model AvatarConfig {
+  id            String       @id @default(uuid())
+  name          String
+  gender        Gender
+  skinTone      String
+  traits        String       @db.Text
+  accent        AccentRegion
+  attire        String
+  region        String
+  personality   String       @db.Text
+  photoGradient String
+  active        Boolean      @default(true)
+
+  // Relaciones
+  campaigns     Campaign[]
+  visitSessions VisitSession[]
+
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+// ==========================================
+// 4. CAMPAIGNS
+// ==========================================
+
+model Campaign {
+  id           String         @id @default(uuid())
+  name         String
+  audience     TargetAudience
+  status       CampaignStatus @default(draft)
+  cycle        String
+  multiProduct Boolean        @default(false)
+  channels     Channel[]
+  
+  // Columnas JSON para estructuras anidadas que no requieren tablas propias
+  filters      Json           // type: AudienceFilter
+  script       Json           // type: CampaignScript
+  ctas         Json           // type: CampaignCta[]
+
+  // Relaciones
+  avatarId     String
+  avatar       AvatarConfig   @relation(fields: [avatarId], references: [id])
+  products     CampaignProduct[]
+  sessions     VisitSession[]
+
+  testedAt     DateTime?
+  approvedAt   DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+// Tabla Pivote para relación muchos-a-muchos (Campaña <-> Productos)
+model CampaignProduct {
+  campaignId String
+  productId  String
+  
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([campaignId, productId])
+}
+
+// ==========================================
+// 5. INTERACTIONS & VISITS
+// ==========================================
+
+model VisitSession {
+  id                 String           @id @default(uuid())
+  targetType         TargetAudience
+  targetId           String           // ID Polimórfico (Apunta a Doctor.id o PharmacyStaff.id)
+  channel            Channel
+  opened             Boolean          @default(false)
+  materialsRequested String[]
+  contextNotes       String[]
+  
+  // Relaciones
+  campaignId         String
+  campaign           Campaign         @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  avatarId           String
+  avatar             AvatarConfig     @relation(fields: [avatarId], references: [id])
+  messages           ConversationMessage[]
+  ctaEvents          CtaEvent[]
+
+  startedAt          DateTime?
+  endedAt            DateTime?
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+}
+
+model ConversationMessage {
+  id             String          @id @default(uuid())
+  role           MessageRole
+  content        String          @db.Text
+  sources        String[]
+  escalated      Boolean         @default(false)
+  escalationDept EscalationDept?
+  ctaShown       Boolean         @default(false)
+  timestamp      DateTime        @default(now())
+
+  // Relaciones
+  sessionId      String
+  session        VisitSession    @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+// Tabla extraída de ctaClicks[] para mejor analítica
+model CtaEvent {
+  id         String   @id @default(uuid())
+  type       String   // type: CtaType
+  productId  String?  // Opcional, por si el CTA es específico de un producto
+
+  // Relaciones
+  sessionId  String
+  session    VisitSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  createdAt  DateTime @default(now())
+}
+
+// ==========================================
+// 6. BILLING & CREDITS
+// ==========================================
+
+model CreditAccount {
+  id           String             @id @default(uuid())
+  balance      Float              @default(0.0)
+  costPerVisit Float
+  costPerCta   Float?
+  currency     String             @default("USD")
+
+  // Relaciones
+  transactions CreditTransaction[]
+
+  updatedAt    DateTime           @updatedAt
+}
+
+model CreditTransaction {
+  id        String          @id @default(uuid())
+  type      TransactionType
+  amount    Float
+  label     String
+  
+  // Relaciones
+  accountId String
+  account   CreditAccount   @relation(fields: [accountId], references: [id])
+
+  createdAt DateTime        @default(now())
+}
