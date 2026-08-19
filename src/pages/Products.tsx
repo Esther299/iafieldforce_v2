@@ -115,7 +115,7 @@ export function Products() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">
-          {products.slice(0, 3).map((p, index) => {
+          {products.slice(0, 3).map((p) => {
             const isSelected = selectedProductId === p.id;
 
             return (
