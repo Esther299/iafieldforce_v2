@@ -62,6 +62,14 @@ export interface GovernanceBlocks {
   rules: string[];
 }
 
+export interface RegionDetail {
+  name: string;
+  coverage: string;
+  reps: number;
+  color: string;
+  countries: string[];
+}
+
 export interface CompanyDocument {
   id: string;
   title: string;
