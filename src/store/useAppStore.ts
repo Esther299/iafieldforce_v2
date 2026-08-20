@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { academyModules, trainerStyles } from "../data/academiaData";
 import {
+  academyModules,
   analytics,
   avatars,
   campaigns as seedCampaigns,
@@ -12,9 +12,10 @@ import {
   products,
   realReps,
   territoryInsights,
+  trainerStyles,
   governanceRules,
   governanceBlocks,
-} from "../data/mock";
+} from "../data";
 import type {
   UserRole,
   AvatarConfig,

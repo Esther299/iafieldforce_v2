@@ -3,7 +3,7 @@ import { Badge, Card } from "../../components/ui";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import type { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { regions } from "../../data/mock";
+import { regions } from "../../data";
 
 const mapCenter: LatLngExpression = [20, 0];
 

@@ -7,7 +7,7 @@ import {
   courses as initialCourses,
   medicalLines as initialMedicalLines,
   trainers as initialTrainers,
-} from "../data/academiaData";
+} from "../data";
 import {
   CreateAreaModal,
   CreateCourseModal,
@@ -55,7 +55,9 @@ export function Academy() {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showAreaModal, setShowAreaModal] = useState(false);
   const [showDiagnosisModal, setShowDiagnosisModal] = useState(false);
-  const [uploadContext, setUploadContext] = useState<UploadContext | null>(null);
+  const [uploadContext, setUploadContext] = useState<UploadContext | null>(
+    null,
+  );
   const [diagnosisContext, setDiagnosisContext] = useState<{
     lineId: string;
   } | null>(null);
@@ -142,7 +144,10 @@ export function Academy() {
                 ...line,
                 diagnoses: line.diagnoses.map((diagnosis) =>
                   diagnosis.id === context.subTargetId
-                    ? { ...diagnosis, documents: [...diagnosis.documents, newDoc] }
+                    ? {
+                        ...diagnosis,
+                        documents: [...diagnosis.documents, newDoc],
+                      }
                     : diagnosis,
                 ),
               }
