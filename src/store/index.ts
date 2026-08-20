@@ -12,7 +12,7 @@ import { createDispatchesSlice } from "./slices/dispatches";
 import { createVisitsSlice } from "./slices/visits";
 import { createTestSlice } from "./slices/test";
 import { createGovernanceSlice } from "./slices/governance";
-import { academyModules, trainerStyles } from "../data";
+import { academyModules, trainerStyles, territoryInsights } from "../data";
 
 // Definir el tipo del estado combinado
 type AppState = ReturnType<typeof createUserSlice> &
@@ -30,6 +30,7 @@ type AppState = ReturnType<typeof createUserSlice> &
   ReturnType<typeof createGovernanceSlice> & {
     academyModules: typeof academyModules;
     trainerStyles: typeof trainerStyles;
+    territoryInsights: typeof territoryInsights;
   };
 
 // Creamos el store con el tipo explícito
@@ -50,4 +51,5 @@ export const useAppStore = create<AppState>((set, get) => ({
   // Datos adicionales
   academyModules,
   trainerStyles,
+  territoryInsights,
 }));

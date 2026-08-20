@@ -82,7 +82,8 @@ export function AppLayout() {
       <div className="mx-auto flex min-h-screen max-w-[1600px]">
         <aside
           className={cn(
-            "fixed inset-y-0 left-0 z-40 w-72 border-r border-ink-200/60 bg-white/95 p-5 backdrop-blur-xl transition-all duration-300 ease-in-out md:static md:translate-x-0",
+            // 1. Convertimos el aside en flex-col para apilar los elementos verticalmente de forma sólida
+            "fixed inset-y-0 left-0 z-40 w-72 border-r border-ink-200/60 bg-white/95 p-5 backdrop-blur-xl transition-all duration-300 ease-in-out md:static md:translate-x-0 flex flex-col",
             open ? "translate-x-0 shadow-2xl" : "-translate-x-full",
           )}
         >
@@ -114,7 +115,8 @@ export function AppLayout() {
             </p>
           </div>
 
-          <nav className="scrollbar-thin flex max-h-[calc(100vh-250px)] flex-col gap-1 overflow-y-auto pr-1">
+          {/* 2. Ajustamos la navegación para que tome el espacio flexible y haga scroll interno si es necesario */}
+          <nav className="scrollbar-thin flex-1 flex-col gap-1 overflow-y-auto pr-1 flex">
             {nav.map((item) => (
               <NavLink
                 key={item.to}
@@ -170,8 +172,8 @@ export function AppLayout() {
             </div>
           </div>
 
-          {/* Footer del Sidebar con rol activo */}
-          <div className="absolute bottom-4 left-4 right-4 hidden rounded-2xl bg-gradient-to-br from-ink-800 to-ink-900 p-3 text-white shadow-lg md:block">
+          {/* 3. Quitamos 'absolute bottom-4 left-4 right-4' y dejamos que fluya de manera estática al final */}
+          <div className="mt-4 hidden rounded-2xl bg-gradient-to-br from-ink-800 to-ink-900 p-3 text-white shadow-lg md:block">
             <p className="text-xs font-semibold">🔬 IA Fieldforce</p>
             <p className="mt-0.5 text-[11px] text-ink-300">
               Operador:{" "}
