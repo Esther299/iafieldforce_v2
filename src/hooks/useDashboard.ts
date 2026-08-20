@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAppStore } from "../store/useAppStore";
+import { useAppStore } from "../store/";
 
 export function useDashboard() {
   const store = useAppStore();
