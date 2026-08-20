@@ -321,3 +321,98 @@ export interface ContextualTip {
   type: "weather" | "traffic" | "event" | "birthday" | "custom";
   template: string;
 }
+
+export type AcademyRoleId =
+  | "training"
+  | "hr"
+  | "commercial"
+  | "marketing"
+  | "brand"
+  | "medical"
+  | "compliance"
+  | "custom";
+
+export interface AcademySubsection {
+  id: string;
+  label: string;
+  icon?: LucideIcon;
+  type:
+    | "trainers"
+    | "courses"
+    | "documents"
+    | "products"
+    | "medical"
+    | "company"
+    | "policies"
+    | "faq"
+    | "promotions"
+    | "custom";
+  data?: any; // Datos específicos de la subsección
+}
+
+export interface AcademyRole {
+  id: AcademyRoleId;
+  label: string;
+  icon: LucideIcon;
+  subsections: AcademySubsection[];
+}
+
+// Datos de formadores
+export interface Trainer {
+  id: string;
+  name: string;
+  role: string;
+  description: string;
+  region: string;
+  videos: string[];
+  traits: {
+    origin: string;
+    accent: string;
+    modismos: string;
+  };
+  personality: string[];
+  education: string[];
+  photo?: string;
+}
+
+// Datos de cursos
+export interface Course {
+  id: string;
+  title: string;
+  date: string;
+  instructor: string;
+  objective: string;
+  instructions: string;
+  documents: { name: string; type: string }[];
+}
+
+// Documentos genéricos
+export interface AcademyDocument {
+  id: string;
+  title: string;
+  type: "pdf" | "doc" | "ppt" | "video" | "audio" | "link";
+  url?: string;
+  uploadedAt: string;
+}
+
+// Productos (para Gerente de Marca)
+export interface ProductMarca {
+  id: string;
+  name: string;
+  campaigns: { id: string; name: string; documents: AcademyDocument[] }[];
+  objections: AcademyDocument[];
+  faqs: AcademyDocument[];
+}
+
+// Líneas médicas (para Director Médico)
+export interface MedicalLine {
+  id: string;
+  name: string;
+  diagnoses: Diagnosis[];
+}
+
+export interface Diagnosis {
+  id: string;
+  name: string;
+  documents: AcademyDocument[];
+}

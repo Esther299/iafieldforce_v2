@@ -1,262 +1,459 @@
-﻿import { useState } from 'react';
-import {
-  BookOpen,
-  Building2,
-  FileText,
-  GraduationCap,
-  Plus,
-  Sparkles,
-  Upload,
-  Users,
-} from 'lucide-react';
-import { Badge, Button, Card, PageHeader } from '../components/ui';
-import { useAppStore } from '../store/useAppStore';
-
-const roles = [
-  'Gerente de Entrenamiento',
-  'Gerente de Recursos Humanos',
-  'Gerente Comercial',
-  'Gerente de Marketing',
-  'Gerente de Marca',
-  'Director Médico',
-  'Gerente de Compliance',
-];
-
-const areaTabs = {
-  HR: ['Descripción de la compañía', 'Políticas', 'Preguntas frecuentes'],
-  Commercial: ['Listas de precios', 'Políticas comerciales', 'Promociones vigentes', 'Preguntas frecuentes'],
-  Marketing: ['Documentos de identidad de marca', 'Políticas de marketing', 'Preguntas frecuentes'],
-};
-
-const trainerCards = [
-  { name: 'Trainer 1', role: 'Médicos', description: 'Estilo técnico, claro y orientado a evidencia.', accent: 'Acento neutro', video: 'Video 1' },
-  { name: 'Trainer 2', role: 'Comercial', description: 'Estilo de cierre y relación con la cuenta.', accent: 'Acento regional', video: 'Video 2' },
-  { name: 'Trainer 3', role: 'Compliance', description: 'Estilo cauteloso y preciso para temas regulatorios.', accent: 'Acento formal', video: 'Video 1' },
-  { name: 'Trainer 4', role: 'Farmacias', description: 'Estilo cercano, amable y de apoyo comercial.', accent: 'Acento local', video: 'Video 2' },
-];
-
-const courseCards = [
-  { title: 'Curso de Manejo de Objeciones', date: '12 Sep 2026', instructor: 'Trainer 1', accent: 'Médicos', docs: ['PDF', 'PPT', 'Video', 'Audio'] },
-  { title: 'Cómo lograr el compromiso del médico', date: '18 Sep 2026', instructor: 'Trainer 2', accent: 'Comercial', docs: ['PDF', 'PPT', 'Video', 'Audio'] },
-  { title: 'Compliance en atención farmacéutica', date: '24 Sep 2026', instructor: 'Trainer 3', accent: 'Farmacias', docs: ['PDF', 'PPT', 'Video', 'Audio'] },
-];
+﻿import { useState } from "react";
+import type { AcademyDocument, AcademyRoleId, Course, MedicalLine, ProductMarca, Trainer } from "../types";
+import { ACADEMY_ROLES, mockCourses, mockMedicalLines, mockProducts, mockTrainers } from "../data/mock";
+import { CoursesContent, DocumentsContent, FaqContent, MedicalContent, PoliciesContent, ProductsContent, PromotionsContent, TrainersContent } from "./academia/Entrenamiento";
+import { MoreHorizontal, Plus } from "lucide-react";
+import { Button, PageHeader } from "../components/ui";
+import { CreateAreaModal, CreateCourseModal, CreateDiagnosisModal, CreateTrainerModal, UploadDocumentModal } from "../components/academy/modals";
+import { cn } from "../lib/cn";
 
 export function Academy() {
-  const { academyModules } = useAppStore();
-  const [activeArea, setActiveArea] = useState<'HR' | 'Commercial' | 'Marketing'>('HR');
-  const [activeSubtab, setActiveSubtab] = useState(areaTabs.HR[0]);
+  // Estado de navegación
+  const [activeRoleId, setActiveRoleId] = useState<AcademyRoleId>("training");
+  const [activeSubsectionId, setActiveSubsectionId] = useState<string | null>(
+    null,
+  );
+
+  // Estado de modales
+  const [showTrainerModal, setShowTrainerModal] = useState(false);
+  const [showCourseModal, setShowCourseModal] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [showAreaModal, setShowAreaModal] = useState(false);
+  const [showDiagnosisModal, setShowDiagnosisModal] = useState(false);
+  const [uploadContext, setUploadContext] = useState<{
+    targetType: "course" | "product" | "document" | "diagnosis";
+    targetId: string;
+    subTargetId?: string;
+  } | null>(null);
+  const [diagnosisContext, setDiagnosisContext] = useState<{
+    lineId: string;
+  } | null>(null);
+
+  // Datos mock (se pueden mover a un store global)
+  const [trainers, setTrainers] = useState<Trainer[]>(mockTrainers);
+  const [courses, setCourses] = useState<Course[]>(mockCourses);
+  const [products, setProducts] = useState<ProductMarca[]>(mockProducts);
+  const [medicalLines, setMedicalLines] =
+    useState<MedicalLine[]>(mockMedicalLines);
+  const [customAreas, setCustomAreas] = useState<
+    { id: string; name: string }[]
+  >([]);
+
+  // Obtener el rol activo
+  const activeRole = ACADEMY_ROLES.find((r) => r.id === activeRoleId);
+  const subsections = activeRole?.subsections || [];
+
+  // Si no hay subsección activa, seleccionar la primera
+  const activeSubsection =
+    subsections.find((s) => s.id === activeSubsectionId) ||
+    subsections[0] ||
+    null;
+
+  // Manejar cambio de rol
+  const handleRoleChange = (roleId: AcademyRoleId) => {
+    setActiveRoleId(roleId);
+    const role = ACADEMY_ROLES.find((r) => r.id === roleId);
+    if (role && role.subsections.length > 0) {
+      setActiveSubsectionId(role.subsections[0].id);
+    } else {
+      setActiveSubsectionId(null);
+    }
+  };
+
+  // Inicializar subsección activa al montar
+  useState(() => {
+    if (activeRole && activeRole.subsections.length > 0) {
+      setActiveSubsectionId(activeRole.subsections[0].id);
+    }
+  });
+
+  // Handlers de creación
+  const handleCreateTrainer = (trainer: Omit<Trainer, "id">) => {
+    const newTrainer: Trainer = {
+      id: `trainer-${Date.now()}`,
+      ...trainer,
+    };
+    setTrainers([...trainers, newTrainer]);
+    // También podríamos sincronizar con el store global
+  };
+
+  const handleCreateCourse = (course: Omit<Course, "id">) => {
+    const newCourse: Course = {
+      id: `course-${Date.now()}`,
+      ...course,
+    };
+    setCourses([...courses, newCourse]);
+  };
+
+  const handleUploadDocument = (
+    doc: Omit<AcademyDocument, "id">,
+    context?: typeof uploadContext,
+  ) => {
+    const newDoc: AcademyDocument = {
+      id: `doc-${Date.now()}`,
+      ...doc,
+    };
+    // Actualizar según contexto
+    if (context) {
+      if (context.targetType === "course") {
+        setCourses((prev) =>
+          prev.map((c) =>
+            c.id === context.targetId
+              ? {
+                  ...c,
+                  documents: [
+                    ...c.documents,
+                    { name: newDoc.title, type: newDoc.type },
+                  ],
+                }
+              : c,
+          ),
+        );
+      } else if (context.targetType === "product") {
+        setProducts((prev) =>
+          prev.map((p) => {
+            if (p.id === context.targetId) {
+              if (context.subTargetId) {
+                // Añadir a campaña específica
+                return {
+                  ...p,
+                  campaigns: p.campaigns.map((camp) =>
+                    camp.id === context.subTargetId
+                      ? { ...camp, documents: [...camp.documents, newDoc] }
+                      : camp,
+                  ),
+                };
+              } else {
+                // Añadir a objeciones o FAQs (según contexto adicional)
+                // Por simplicidad, lo añadimos a objeciones
+                return { ...p, objections: [...p.objections, newDoc] };
+              }
+            }
+            return p;
+          }),
+        );
+      } else if (context.targetType === "diagnosis") {
+        setMedicalLines((prev) =>
+          prev.map((line) => {
+            if (line.id === context.targetId) {
+              return {
+                ...line,
+                diagnoses: line.diagnoses.map((d) =>
+                  d.id === context.subTargetId
+                    ? { ...d, documents: [...d.documents, newDoc] }
+                    : d,
+                ),
+              };
+            }
+            return line;
+          }),
+        );
+      }
+    }
+  };
+
+  const handleCreateArea = (name: string) => {
+    const newArea = { id: `custom-${Date.now()}`, name };
+    setCustomAreas([...customAreas, newArea]);
+  };
+
+  const handleCreateDiagnosis = (lineId: string, diagnosisName: string) => {
+    setMedicalLines((prev) =>
+      prev.map((line) => {
+        if (line.id === lineId) {
+          return {
+            ...line,
+            diagnoses: [
+              ...line.diagnoses,
+              {
+                id: `diag-${Date.now()}`,
+                name: diagnosisName,
+                documents: [],
+              },
+            ],
+          };
+        }
+        return line;
+      }),
+    );
+  };
+
+  // Renderizar contenido según el tipo de subsección
+  const renderContent = () => {
+    if (!activeSubsection) {
+      return (
+        <div className="flex h-40 items-center justify-center">
+          <p className="text-ink-500">Selecciona una subsección</p>
+        </div>
+      );
+    }
+
+    switch (activeSubsection.type) {
+      case "trainers":
+        return (
+          <TrainersContent
+            trainers={trainers}
+            onCreateTrainer={() => setShowTrainerModal(true)}
+          />
+        );
+      case "courses":
+        return (
+          <CoursesContent
+            courses={courses}
+            onCreateCourse={() => setShowCourseModal(true)}
+            onUploadDocument={(courseId) => {
+              setUploadContext({ targetType: "course", targetId: courseId });
+              setShowUploadModal(true);
+            }}
+          />
+        );
+      case "documents":
+        return (
+          <DocumentsContent
+            documents={activeSubsection.data || []}
+            title={activeSubsection.label}
+            onUpload={() => {
+              setUploadContext({
+                targetType: "document",
+                targetId: activeSubsection.id,
+              });
+              setShowUploadModal(true);
+            }}
+          />
+        );
+      case "policies":
+        return (
+          <PoliciesContent
+            documents={activeSubsection.data || []}
+            onUpload={() => {
+              setUploadContext({
+                targetType: "document",
+                targetId: activeSubsection.id,
+              });
+              setShowUploadModal(true);
+            }}
+          />
+        );
+      case "faq":
+        return (
+          <FaqContent
+            documents={activeSubsection.data || []}
+            onUpload={() => {
+              setUploadContext({
+                targetType: "document",
+                targetId: activeSubsection.id,
+              });
+              setShowUploadModal(true);
+            }}
+          />
+        );
+      case "promotions":
+        return (
+          <PromotionsContent
+            documents={activeSubsection.data || []}
+            onUpload={() => {
+              setUploadContext({
+                targetType: "document",
+                targetId: activeSubsection.id,
+              });
+              setShowUploadModal(true);
+            }}
+          />
+        );
+      case "products":
+        return (
+          <ProductsContent
+            products={products}
+            onAddProduct={() => {
+              // Simular añadir producto
+              const newProduct: ProductMarca = {
+                id: `prod-${Date.now()}`,
+                name: `Producto ${products.length + 1}`,
+                campaigns: [],
+                objections: [],
+                faqs: [],
+              };
+              setProducts([...products, newProduct]);
+            }}
+            onUploadDocument={(productId, campaignId) => {
+              setUploadContext({
+                targetType: "product",
+                targetId: productId,
+                subTargetId: campaignId,
+              });
+              setShowUploadModal(true);
+            }}
+          />
+        );
+      case "medical":
+        return (
+          <MedicalContent
+            lines={medicalLines}
+            onAddLine={() => {
+              // Simular añadir línea
+              const newLine: MedicalLine = {
+                id: `line-${Date.now()}`,
+                name: `Línea ${medicalLines.length + 1}`,
+                diagnoses: [],
+              };
+              setMedicalLines([...medicalLines, newLine]);
+            }}
+            onAddDiagnosis={(lineId) => {
+              setDiagnosisContext({ lineId });
+              setShowDiagnosisModal(true);
+            }}
+            onUploadDocument={(lineId, diagnosisId) => {
+              setUploadContext({
+                targetType: "diagnosis",
+                targetId: lineId,
+                subTargetId: diagnosisId,
+              });
+              setShowUploadModal(true);
+            }}
+          />
+        );
+      case "custom":
+        return (
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 text-brand-700">
+              <MoreHorizontal size={18} />
+              <span className="text-xs font-bold uppercase tracking-wider">
+                Área personalizada
+              </span>
+            </div>
+            <p className="text-sm text-ink-600">
+              Aquí deberías poder darle a la compañía la flexibilidad y libertad
+              de crear cualquier otra área sin que tenga que llamarnos.
+            </p>
+            <Button onClick={() => setShowAreaModal(true)}>
+              <Plus size={18} className="mr-2" />
+              Crear otra área
+            </Button>
+            {customAreas.length > 0 && (
+              <div className="mt-4 grid gap-2">
+                {customAreas.map((area) => (
+                  <div
+                    key={area.id}
+                    className="rounded-xl border border-ink-200 bg-white p-3"
+                  >
+                    <p className="font-medium text-ink-900">{area.name}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      default:
+        return (
+          <div className="rounded-xl bg-ink-50 p-6 text-center text-ink-500">
+            Contenido no disponible para esta subsección.
+          </div>
+        );
+    }
+  };
+
+  // Handler para cerrar upload modal y resetear contexto
+  const handleCloseUpload = () => {
+    setShowUploadModal(false);
+    setUploadContext(null);
+  };
 
   return (
     <div className="animate-fade-up space-y-6">
       <PageHeader
         title="Academia"
         subtitle="Estructura jerárquica, entrenadores, cursos formativos y materiales específicos por área de negocio."
-        actions={
-          <Button className="shadow-md shadow-brand-700/20">
-            <Plus size={18} />
-            Crear Nuevo Formador
-          </Button>
-        }
       />
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {roles.map((role) => (
-          <Card key={role} className="border-ink-200/80 bg-gradient-to-br from-white to-brand-50/20 p-4">
-            <div className="flex items-center gap-2 text-brand-700">
-              <Users size={15} />
-              <p className="text-[11px] font-bold uppercase tracking-[0.18em]">Rol</p>
-            </div>
-            <p className="mt-3 text-sm font-black text-ink-900">{role}</p>
-          </Card>
+      {/* Sidebar de roles */}
+      <div className="flex flex-wrap gap-2">
+        {ACADEMY_ROLES.map((role) => (
+          <button
+            key={role.id}
+            onClick={() => handleRoleChange(role.id)}
+            className={cn(
+              "flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition",
+              activeRoleId === role.id
+                ? "bg-[#1e3579] text-white shadow-md shadow-brand-900/20"
+                : "bg-white text-ink-700 hover:bg-ink-100 border border-ink-200",
+            )}
+          >
+            <role.icon size={16} />
+            {role.label}
+          </button>
         ))}
       </div>
 
-      <Card className="border-ink-200/80 bg-white p-5">
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-brand-700">
-            <GraduationCap size={18} />
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em]">Trainers</p>
-          </div>
-          <Badge tone="brand">{trainerCards.length} formadores</Badge>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {trainerCards.map((trainer) => (
-            <Card key={trainer.name} className="border-ink-200/80 bg-gradient-to-br from-white to-brand-50/20 p-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-100 text-sm font-black text-brand-700">
-                  {trainer.name.slice(0, 2)}
-                </div>
-                <div>
-                  <p className="text-sm font-black text-ink-900">{trainer.name}</p>
-                  <p className="text-xs text-ink-500">{trainer.role}</p>
-                </div>
-              </div>
-              <p className="mt-3 text-xs text-ink-600">{trainer.description}</p>
-              <div className="mt-3 flex items-center justify-between">
-                <Badge tone="success">{trainer.accent}</Badge>
-                <Badge tone="neutral">{trainer.video}</Badge>
-              </div>
-            </Card>
-          ))}
-        </div>
-      </Card>
-
-      <Card className="border-ink-200/80 bg-white p-5">
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-brand-700">
-            <BookOpen size={18} />
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em]">Cursos</p>
-          </div>
-          <Badge tone="neutral">{academyModules.length} módulos</Badge>
-        </div>
-
-        <div className="grid gap-4 lg:grid-cols-3">
-          {courseCards.map((course) => (
-            <Card key={course.title} className="border-ink-200/80 bg-gradient-to-br from-white to-brand-50/20 p-4">
-              <div className="flex items-center justify-between gap-2">
-                <Badge tone="brand">{course.accent}</Badge>
-                <Badge tone="neutral">{course.date}</Badge>
-              </div>
-              <p className="mt-3 text-lg font-black text-ink-900">{course.title}</p>
-              <p className="mt-1 text-xs text-ink-500">Instructor: {course.instructor}</p>
-              <div className="mt-4 rounded-2xl border border-dashed border-ink-200 bg-ink-50 p-3">
-                <div className="mb-2 flex items-center gap-2 text-brand-700">
-                  <Upload size={14} />
-                  <span className="text-[11px] font-bold uppercase tracking-[0.18em]">Subir materiales</span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {course.docs.map((doc) => (
-                    <Badge key={doc} tone="neutral">{doc}</Badge>
-                  ))}
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
-      </Card>
-
-      <Card className="border-ink-200/80 bg-white p-5">
-        <div className="mb-4 flex items-center gap-2 text-brand-700">
-          <Building2 size={18} />
-          <p className="text-[11px] font-bold uppercase tracking-[0.18em]">Áreas específicas</p>
-        </div>
-
-        <div className="mb-4 flex flex-wrap gap-2">
-          {(['HR', 'Commercial', 'Marketing'] as const).map((area) => (
+      {/* Subsecciones (tabs) */}
+      {subsections.length > 0 && (
+        <div className="flex flex-wrap gap-2 border-b border-ink-200 pb-3">
+          {subsections.map((sub:any) => (
             <button
-              key={area}
-              type="button"
-              onClick={() => {
-                setActiveArea(area);
-                setActiveSubtab(areaTabs[area][0]);
-              }}
-              className={`rounded-full px-3 py-1.5 text-sm font-semibold transition ${
-                activeArea === area ? 'bg-brand-600 text-white' : 'bg-ink-100 text-ink-700 hover:bg-ink-200'
-              }`}
+              key={sub.id}
+              onClick={() => setActiveSubsectionId(sub.id)}
+              className={cn(
+                "rounded-full px-3 py-1.5 text-xs font-semibold transition",
+                activeSubsectionId === sub.id
+                  ? "bg-brand-100 text-brand-800"
+                  : "text-ink-600 hover:bg-ink-100",
+              )}
             >
-              {area}
+              {sub.icon && <sub.icon size={14} className="mr-1 inline" />}
+              {sub.label}
             </button>
           ))}
         </div>
+      )}
 
-        <div className="flex flex-wrap gap-2 border-b border-ink-100 pb-3">
-          {areaTabs[activeArea].map((tab) => (
-            <button
-              key={tab}
-              type="button"
-              onClick={() => setActiveSubtab(tab)}
-              className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
-                activeSubtab === tab ? 'bg-brand-100 text-brand-800' : 'bg-ink-100 text-ink-600 hover:bg-ink-200'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+      {/* Contenido */}
+      <div className="min-h-[400px]">{renderContent()}</div>
 
-        <div className="mt-4 rounded-2xl border border-ink-200 bg-ink-50/40 p-4">
-          <div className="mb-3 flex items-center gap-2 text-brand-700">
-            <FileText size={15} />
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em]">{activeSubtab}</p>
-          </div>
+      {/* Modales */}
+      <CreateTrainerModal
+        isOpen={showTrainerModal}
+        onClose={() => setShowTrainerModal(false)}
+        onCreate={handleCreateTrainer}
+      />
 
-          {activeArea === 'HR' && activeSubtab === 'Descripción de la compañía' && (
-            <div className="space-y-2 text-sm text-ink-700">
-              <p>Historia corporativa: expansión regional, evolución del negocio y apuesta por la excelencia comercial.</p>
-              <p>Equipo ejecutivo: liderazgo, dirección comercial, medicina, marketing y compliance.</p>
-            </div>
-          )}
+      <CreateCourseModal
+        isOpen={showCourseModal}
+        onClose={() => setShowCourseModal(false)}
+        onCreate={handleCreateCourse}
+      />
 
-          {activeArea === 'HR' && activeSubtab === 'Políticas' && (
-            <div className="space-y-2 text-sm text-ink-700">
-              <p>Políticas de empleo, contratación, vacaciones, puntualidad y desarrollo profesional del equipo.</p>
-            </div>
-          )}
+      <UploadDocumentModal
+        isOpen={showUploadModal}
+        onClose={handleCloseUpload}
+        onUpload={(doc) =>
+          handleUploadDocument(doc, uploadContext || undefined)
+        }
+        title="Cargar Documento"
+      />
 
-          {activeArea === 'HR' && activeSubtab === 'Preguntas frecuentes' && (
-            <div className="space-y-2 text-sm text-ink-700">
-              <p>Preguntas frecuentes sobre médicos, farmacias y primeros pasos del personal comercial.</p>
-            </div>
-          )}
+      <CreateAreaModal
+        isOpen={showAreaModal}
+        onClose={() => setShowAreaModal(false)}
+        onCreate={handleCreateArea}
+      />
 
-          {activeArea === 'Commercial' && activeSubtab === 'Listas de precios' && (
-            <div className="space-y-2 text-sm text-ink-700">
-              <p>Listado actualizado por línea, canal y región con vigencia mensual.</p>
-            </div>
-          )}
-
-          {activeArea === 'Commercial' && activeSubtab === 'Políticas comerciales' && (
-            <div className="space-y-2 text-sm text-ink-700">
-              <p>Reglas de descuento, manejo de cuentas clave, activación regional y cumplimiento de políticas.</p>
-            </div>
-          )}
-
-          {activeArea === 'Commercial' && activeSubtab === 'Promociones vigentes' && (
-            <div className="space-y-2 text-sm text-ink-700">
-              <p>Promociones activas con recordatorio automático al final del mes para el gerente y alertas por email al equipo de gobernanza.</p>
-            </div>
-          )}
-
-          {activeArea === 'Commercial' && activeSubtab === 'Preguntas frecuentes' && (
-            <div className="space-y-2 text-sm text-ink-700">
-              <p>Consultas sobre entregas, cartera, escalamiento y validación del flujo comercial.</p>
-            </div>
-          )}
-
-          {activeArea === 'Marketing' && activeSubtab === 'Documentos de identidad de marca' && (
-            <div className="space-y-2 text-sm text-ink-700">
-              <p>Manifesto, propósito, visión y lenguaje de marca para la comunicación consistente en todas las capas.</p>
-            </div>
-          )}
-
-          {activeArea === 'Marketing' && activeSubtab === 'Políticas de marketing' && (
-            <div className="space-y-2 text-sm text-ink-700">
-              <p>Uso de mensajes, validación de campañas, aprobación de piezas y lineamientos de promoción.</p>
-            </div>
-          )}
-
-          {activeArea === 'Marketing' && activeSubtab === 'Preguntas frecuentes' && (
-            <div className="space-y-2 text-sm text-ink-700">
-              <p>Consultas sobre identidad, segmentación, activación y soporte creativo de campañas.</p>
-            </div>
-          )}
-        </div>
-      </Card>
-
-      <Card className="border-ink-200/80 bg-white p-5">
-        <div className="mb-4 flex items-center gap-2 text-brand-700">
-          <Sparkles size={18} />
-          <p className="text-[11px] font-bold uppercase tracking-[0.18em]">Documentos compartidos</p>
-        </div>
-        <div className="grid gap-3 md:grid-cols-4">
-          {['PDF', 'Presentación', 'Video', 'Audio'].map((doc) => (
-            <div key={doc} className="rounded-2xl border border-ink-200 bg-ink-50 p-3 text-center text-sm font-medium text-ink-700">
-              {doc}
-            </div>
-          ))}
-        </div>
-      </Card>
+      {diagnosisContext && (
+        <CreateDiagnosisModal
+          isOpen={showDiagnosisModal}
+          onClose={() => {
+            setShowDiagnosisModal(false);
+            setDiagnosisContext(null);
+          }}
+          onCreate={(name) => {
+            if (diagnosisContext) {
+              handleCreateDiagnosis(diagnosisContext.lineId, name);
+            }
+          }}
+          lineName={
+            medicalLines.find((l) => l.id === diagnosisContext?.lineId)?.name ||
+            ""
+          }
+        />
+      )}
     </div>
   );
 }
