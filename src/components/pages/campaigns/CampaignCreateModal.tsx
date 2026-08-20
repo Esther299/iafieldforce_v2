@@ -1,7 +1,46 @@
 import { Bookmark, FileText, CheckCircle2 } from "lucide-react";
 import { Button, Input, Label, Modal, Select, Textarea } from "../../ui";
 import type { Campaign, TargetAudience } from "../../../types";
-import { DRAFT_TEMPLATES } from "../../../pages/Campaigns";
+
+const DRAFT_TEMPLATES = [
+  {
+    title: "Lanzamiento CardioFlex",
+    audience: "covered_doctors" as TargetAudience,
+    cycle: "2026-Q3",
+    opening:
+      "Buenos días, {title} {lastName}. Soy {avatarName}, en apoyo a {realRepName}.",
+    productPresentation:
+      "Presentamos CardioFlex XR para el control de la hipertensión con toma única diaria.",
+    probingQuestion:
+      "¿Qué porcentaje de sus pacientes hipertensos no logran la meta con monoterapia?",
+    closing: "Solicite una muestra médica para su próximo paciente candidato.",
+  },
+  {
+    title: "Campaña Pediatría Respirax",
+    audience: "uncovered_doctors" as TargetAudience,
+    cycle: "2026-Q3",
+    opening:
+      "Estimado/a {title} {lastName}, un saludo de parte de {avatarName}.",
+    productPresentation:
+      "Respirax Kids ofrece alivio sintomático pediátrico de acción rápida con perfil de seguridad comprobado.",
+    probingQuestion:
+      "¿Con qué frecuencia recibe casos de tos persistente en temporada fría?",
+    closing: "Haga clic abajo si desea recibir el dossier médico digital.",
+  },
+  {
+    title: "Capacitación Farmacias",
+    audience: "pharmacy_staff" as TargetAudience,
+    cycle: "2026-Q3",
+    opening:
+      "Hola, {firstName}. Te escribe {avatarName} del equipo de capacitación médica.",
+    productPresentation:
+      "Queremos recordarte la posología recomendada de la línea GastroPro.",
+    probingQuestion:
+      "¿Tus clientes te preguntan seguido por la toma en ayunas?",
+    closing:
+      "Completa el test rápido para recibir tu certificado de entrenamiento.",
+  },
+];
 
 interface CampaignCreateModalProps {
   isOpen: boolean;

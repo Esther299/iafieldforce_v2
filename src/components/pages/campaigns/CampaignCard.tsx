@@ -1,6 +1,17 @@
 import { Badge, Card } from "../../ui";
-import type { Campaign } from "../../../types";
-import { statusTone } from "../../../pages/Campaigns";
+import type { Campaign, CampaignStatus } from "../../../types";
+
+const statusTone: Record<
+  CampaignStatus,
+  "neutral" | "brand" | "success" | "warn" | "danger"
+> = {
+  draft: "neutral",
+  testing: "warn",
+  approved: "brand",
+  live: "success",
+  paused: "warn",
+  completed: "neutral",
+};
 
 interface CampaignCardProps {
   campaign: Campaign;

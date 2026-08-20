@@ -10,8 +10,24 @@ import {
 } from "lucide-react";
 import { Badge, Button, Label, Modal, Select } from "../../ui";
 import { CampaignScriptLine } from "./CampaignScriptLine";
-import type { Campaign, Channel, TargetAudience, CampaignStatus } from "../../../types";
-import { statusTone } from "../../../pages/Campaigns";
+import type {
+  Campaign,
+  Channel,
+  TargetAudience,
+  CampaignStatus,
+} from "../../../types";
+
+const statusTone: Record<
+  CampaignStatus,
+  "neutral" | "brand" | "success" | "warn" | "danger"
+> = {
+  draft: "neutral",
+  testing: "warn",
+  approved: "brand",
+  live: "success",
+  paused: "warn",
+  completed: "neutral",
+};
 
 interface CampaignDetailModalProps {
   campaign: Campaign;
@@ -44,6 +60,7 @@ export function CampaignDetailModal({
   onStatusChange,
   onDelete,
 }: CampaignDetailModalProps) {
+  if (!campaign) return null;
   return (
     <Modal
       isOpen={isOpen}
