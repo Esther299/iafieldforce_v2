@@ -1,0 +1,22 @@
+import { DocumentList } from "@/features/academy/components";
+import type { AcademyDocument } from "@/features/academy/types";
+
+/**
+ * Pantalla genérica de documentos: descripción de compañía, políticas,
+ * preguntas frecuentes, listas de precios e identidad de marca.
+ */
+export function DocumentsView({
+  documents,
+  title,
+  onUpload,
+}: {
+  documents: AcademyDocument[];
+  title?: string;
+  onUpload: () => void;
+}) {
+  return (
+    <div className="space-y-4">
+      <DocumentList documents={documents} title={title} onUpload={onUpload} />
+    </div>
+  );
+}

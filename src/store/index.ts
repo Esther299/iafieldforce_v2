@@ -1,20 +1,20 @@
 import { create } from "zustand";
-import { createUserSlice } from "./slices/user";
-import { createAvatarsSlice } from "./slices/avatars";
-import { createProductsSlice } from "./slices/products";
-import { createDoctorsSlice } from "./slices/doctors";
-import { createPharmacySlice } from "./slices/pharmacy";
-import { createRealRepsSlice } from "./slices/realReps";
-import { createCampaignsSlice } from "./slices/campaigns";
-import { createCreditsSlice } from "./slices/credits";
-import { createAnalyticsSlice } from "./slices/analytics";
-import { createDispatchesSlice } from "./slices/dispatches";
-import { createVisitsSlice } from "./slices/visits";
-import { createTestSlice } from "./slices/test";
-import { createGovernanceSlice } from "./slices/governance";
-import { academyModules, trainerStyles, territoryInsights } from "../data";
+import { createUserSlice } from "@/shared/store/userSlice";
+import { createAvatarsSlice } from "@/features/team/store/avatarsSlice";
+import { createProductsSlice } from "@/features/products/store/productsSlice";
+import { createDoctorsSlice } from "@/features/crm/store/doctorsSlice";
+import { createPharmacySlice } from "@/features/crm/store/pharmacySlice";
+import { createRealRepsSlice } from "@/features/team/store/realRepsSlice";
+import { createCampaignsSlice } from "@/features/campaigns/store/campaignsSlice";
+import { createCreditsSlice } from "@/features/credits/store/creditsSlice";
+import { createAnalyticsSlice } from "@/features/analytics/store/analyticsSlice";
+import { createDispatchesSlice } from "@/features/campaigns/store/dispatchesSlice";
+import { createVisitsSlice } from "@/features/visit/store/visitsSlice";
+import { createTestSlice } from "@/features/campaigns/store/testSlice";
+import { createGovernanceSlice } from "@/features/governance/store/governanceSlice";
+import { academyModules, trainerStyles } from "@/features/academy/data";
+import { territoryInsights } from "@/features/territory/data/territory";
 
-// Definir el tipo del estado combinado
 type AppState = ReturnType<typeof createUserSlice> &
   ReturnType<typeof createAvatarsSlice> &
   ReturnType<typeof createProductsSlice> &
@@ -33,7 +33,6 @@ type AppState = ReturnType<typeof createUserSlice> &
     territoryInsights: typeof territoryInsights;
   };
 
-// Creamos el store con el tipo explícito
 export const useAppStore = create<AppState>((set, get) => ({
   ...createUserSlice(set),
   ...createAvatarsSlice(set),
@@ -48,7 +47,6 @@ export const useAppStore = create<AppState>((set, get) => ({
   ...createVisitsSlice(set, get),
   ...createTestSlice(set, get),
   ...createGovernanceSlice(set),
-  // Datos adicionales
   academyModules,
   trainerStyles,
   territoryInsights,

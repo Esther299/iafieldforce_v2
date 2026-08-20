@@ -1,0 +1,125 @@
+import type { CompanyDocument } from "@/shared/types";
+
+export const documents: CompanyDocument[] = [
+  {
+    id: "doc-profile-cf",
+    title: "Perfil de producto CardioFlex XR",
+    type: "product_profile",
+    productId: "prod-cardioflex",
+    content:
+      "CardioFlex XR combina atenolol e indapamida en liberación prolongada para el manejo de hipertensión arterial esencial en adultos. Dosis habitual según ficha técnica aprobada. No exceder posología indicada en IPP.",
+    tags: ["hipertensión", "cardiología", "perfil"],
+    version: "3.1",
+    approved: true,
+    updatedAt: "2026-07-01",
+  },
+  {
+    id: "doc-ipp-cf",
+    title: "Información para prescribir CardioFlex XR",
+    type: "prescribing_info",
+    productId: "prod-cardioflex",
+    content:
+      "Indicaciones: hipertensión arterial esencial. Contraindicaciones: bradicardia sinusal, bloqueo AV de 2.º/3.er grado, insuficiencia cardiaca no controlada, hipersensibilidad a componentes. Advertencias: monitorear frecuencia cardiaca y electrolitos. Embarazo: consultar IPP completa.",
+    tags: ["ipp", "contraindicaciones", "posología"],
+    version: "3.1",
+    approved: true,
+    updatedAt: "2026-07-01",
+  },
+  {
+    id: "doc-study-cf-01",
+    title: "Estudio CLIN-CF-2024: reducción de PA sistólica",
+    type: "clinical_study",
+    productId: "prod-cardioflex",
+    content:
+      "Estudio multicéntrico aleatorizado n=842. CardioFlex XR logró reducción media de PAS de 18.4 mmHg a 12 semanas vs baseline (p<0.01). Perfil de eventos adversos comparable a control activo. Resultados limitados a población adulta con HTA esencial según criterios de inclusión del protocolo.",
+    tags: ["estudio", "eficacia", "seguridad"],
+    version: "1.0",
+    approved: true,
+    updatedAt: "2026-06-15",
+  },
+  {
+    id: "doc-va-cf",
+    title: "Visual Aid ciclo Q3 CardioFlex",
+    type: "visual_aid",
+    productId: "prod-cardioflex",
+    campaignId: "camp-cf-q3",
+    content:
+      "Pieza visual: control 24h, gráfica de reducción PAS, mención de estudio CLIN-CF-2024, llamada a solicitud de muestra. No incluir comparaciones no aprobadas.",
+    tags: ["visual aid", "q3"],
+    version: "1.2",
+    approved: true,
+    updatedAt: "2026-08-01",
+  },
+  {
+    id: "doc-script-cf",
+    title: "Script campaña Q3 CardioFlex",
+    type: "campaign_script",
+    productId: "prod-cardioflex",
+    campaignId: "camp-cf-q3",
+    content:
+      "Apertura cortés + tip contextual. Presentar CardioFlex XR como apoyo al control sostenido. Mencionar CLIN-CF-2024 (reducción PAS 18.4 mmHg). Pregunta de sondeo sobre pacientes candidatos. CTA muestra. En cubiertos: apoyar a visitador real.",
+    tags: ["script", "campaña"],
+    version: "2.0",
+    approved: true,
+    updatedAt: "2026-08-02",
+  },
+  {
+    id: "doc-profile-rx",
+    title: "Perfil Respirax Kids",
+    type: "product_profile",
+    productId: "prod-respirax",
+    content:
+      "Respirax Kids (montelukast) indicado en asma y rinitis alérgica pediátrica según IPP. Presentación pediátrica. Mensajes centrados en adherencia y control de síntomas.",
+    tags: ["pediatría", "asma"],
+    version: "2.0",
+    approved: true,
+    updatedAt: "2026-05-20",
+  },
+  {
+    id: "doc-study-rx-01",
+    title: "Estudio PED-RX-15 control sintomático",
+    type: "clinical_study",
+    productId: "prod-respirax",
+    content:
+      "Estudio pediátrico n=320. Mejora significativa en score de síntomas nocturnos a 8 semanas. No extrapolar a poblaciones fuera de etiqueta.",
+    tags: ["pediatría", "estudio"],
+    version: "1.0",
+    approved: true,
+    updatedAt: "2026-04-10",
+  },
+  {
+    id: "doc-profile-gp",
+    title: "Perfil GastroPro",
+    type: "product_profile",
+    productId: "prod-gastropro",
+    content:
+      "GastroPro (pantoprazol) para ERGE y úlcera péptica. Mensaje: alivio y protección mucosa según ficha aprobada.",
+    tags: ["gastro", "erge"],
+    version: "1.5",
+    approved: true,
+    updatedAt: "2026-03-01",
+  },
+  {
+    id: "doc-study-gp-01",
+    title: "Estudio GP-ERGE-09",
+    type: "clinical_study",
+    productId: "prod-gastropro",
+    content:
+      "Remisión sintomática en mayoría de pacientes con ERGE a 4 semanas en cohorte observada. Datos según protocolo interno aprobado.",
+    tags: ["erge", "estudio"],
+    version: "1.0",
+    approved: true,
+    updatedAt: "2026-02-12",
+  },
+  {
+    id: "doc-train-pharma",
+    title: "Módulo dependientes: recomendación responsable",
+    type: "training",
+    content:
+      "Capacitación para dependientes de farmacia: identificación de necesidad, recordación de marca, derivación al médico cuando corresponda, sin diagnóstico. Enfoque en profesionalización y servicio al paciente.",
+    tags: ["farmacia", "entrenamiento"],
+    version: "1.0",
+    approved: true,
+    updatedAt: "2026-07-20",
+  },
+];
