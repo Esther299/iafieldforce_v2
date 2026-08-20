@@ -81,7 +81,7 @@ export function Products() {
   }
 
   return (
-    <div className="animate-fade-up space-y-6 bg-sky-200 min-h-screen p-6">
+    <div className="animate-fade-up space-y-6">
       <PageHeader
         title="Productos y documentación"
         subtitle="Perfil, IPP, estudios clínicos, visual aids y scripts. El Visitador Médico solo responde con este corpus aprobado."

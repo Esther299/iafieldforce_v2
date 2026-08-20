@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { ChatPanel } from "../components/ChatPanel";
-import { AvatarFace } from "../components/AvatarFace";
+import { ChatPanel } from "../components/common/ChatPanel";
+import { AvatarFace } from "../components/common/AvatarFace";
 import {
   Badge,
   Button,
@@ -9,6 +9,7 @@ import {
   PageHeader,
   Select,
   Modal,
+  Stat,
 } from "../components/ui";
 import { useAppStore } from "../store/useAppStore";
 import type { Channel } from "../types";
@@ -132,73 +133,30 @@ export function Visit() {
 
       {/* Métricas rápidas */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="group relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50/60 via-white to-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-blue-600/80">
-              Campañas activas
-            </span>
-            <div className="rounded-xl bg-blue-500/10 p-2.5 text-blue-600 transition-transform group-hover:scale-110">
-              <Target size={18} />
-            </div>
-          </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
-            {activeCampaigns}
-          </p>
-          <p className="mt-2 text-xs font-medium text-blue-700/80">
-            {store.campaigns.length} totales
-          </p>
-        </div>
-
-        <div className="group relative overflow-hidden rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50/60 via-white to-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600/80">
-              Médicos disponibles
-            </span>
-            <div className="rounded-xl bg-emerald-500/10 p-2.5 text-emerald-600 transition-transform group-hover:scale-110">
-              <User size={18} />
-            </div>
-          </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
-            {totalDoctors}
-          </p>
-          <p className="mt-2 text-xs font-medium text-emerald-700/80">
-            {store.doctors.filter((d) => d.covered).length} cubiertos
-          </p>
-        </div>
-
-        <div className="group relative overflow-hidden rounded-2xl border border-violet-100 bg-gradient-to-br from-violet-50/60 via-white to-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-violet-600/80">
-              Farmacias
-            </span>
-            <div className="rounded-xl bg-violet-500/10 p-2.5 text-violet-600 transition-transform group-hover:scale-110">
-              <Users size={18} />
-            </div>
-          </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
-            {totalPharmacies}
-          </p>
-          <p className="mt-2 text-xs font-medium text-violet-700/80">
-            Dependientes registrados
-          </p>
-        </div>
-
-        <div className="group relative overflow-hidden rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50/60 via-white to-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-600/80">
-              Visita actual
-            </span>
-            <div className="rounded-xl bg-amber-500/10 p-2.5 text-amber-600 transition-transform group-hover:scale-110">
-              <MessageSquare size={18} />
-            </div>
-          </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
-            {store.activeVisit ? store.activeVisit.messages.length : 0}
-          </p>
-          <p className="mt-2 text-xs font-medium text-amber-700/80">
-            {store.activeVisit ? "Sesión activa" : "Sin sesión"}
-          </p>
-        </div>
+        <Stat
+          label="Campañas activas"
+          value={activeCampaigns}
+          hint={`${store.campaigns.length} totales`}
+          icon={<Target size={18} />}
+        />
+        <Stat
+          label="Médicos disponibles"
+          value={totalDoctors}
+          hint={`${store.doctors.filter((d) => d.covered).length} cubiertos`}
+          icon={<User size={18} />}
+        />
+        <Stat
+          label="Farmacias"
+          value={totalPharmacies}
+          hint="Dependientes registrados"
+          icon={<Users size={18} />}
+        />
+        <Stat
+          label="Visita actual"
+          value={store.activeVisit ? store.activeVisit.messages.length : 0}
+          hint={store.activeVisit ? "Sesión activa" : "Sin sesión"}
+          icon={<MessageSquare size={18} />}
+        />
       </div>
 
       {/* Tarjetas de información (Avatar, Target, Tips) - ahora en grid horizontal */}

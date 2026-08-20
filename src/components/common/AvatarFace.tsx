@@ -1,5 +1,5 @@
-import { cn } from '../lib/cn'
-import type { AvatarConfig } from '../types'
+import { cn } from '../../lib/cn'
+import type { AvatarConfig } from '../../types'
 
 export function AvatarFace({ avatar, size = 'md', speaking }: { avatar: AvatarConfig; size?: 'sm' | 'md' | 'lg' | 'xl'; speaking?: boolean }) {
   const sizes = {

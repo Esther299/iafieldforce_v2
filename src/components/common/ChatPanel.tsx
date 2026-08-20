@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { Send, ShieldAlert, FileText } from 'lucide-react'
-import type { AvatarConfig, Campaign, ConversationMessage, CtaType } from '../types'
+import type { AvatarConfig, Campaign, ConversationMessage, CtaType } from '../../types'
 import { AvatarFace } from './AvatarFace'
-import { Badge, Button } from './ui'
-import { cn } from '../lib/cn'
+import { Badge, Button } from '../ui'
+import { cn } from '../../lib/cn'
 
 export function ChatPanel({
   avatar,

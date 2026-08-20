@@ -74,7 +74,7 @@ export function Dashboard() {
   ];
 
   return (
-    <div className="animate-fade-up space-y-6 bg-sky-200 min-h-screen p-6">
+    <div className="animate-fade-up space-y-6">
       <PageHeader
         title="Centro de mando"
         subtitle="Defina avatares, alimente productos y campañas, pruebe el mensaje, dé el go final y mida reach y engagement."

@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Palette, Shirt, Sparkles, User, Users, Upload } from "lucide-react";
-import { AvatarFace } from "../../components/AvatarFace";
+import { AvatarFace } from "../../components/common/AvatarFace";
 import {
   Button,
   Card,
@@ -84,7 +84,7 @@ const initialFormState: AvatarConfig = {
   },
 };
 
-export function Reps() {
+export function RepsView() {
   const { upsertAvatar } = useAppStore();
   const [form, setForm] = useState<AvatarConfig>(initialFormState);
   const [viewMode, setViewMode] = useState<"torso" | "cuerpo" | "prueba">(

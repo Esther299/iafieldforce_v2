@@ -73,7 +73,7 @@ export function Crm() {
   ];
 
   return (
-    <div className="animate-fade-up space-y-6 bg-sky-200 min-h-screen p-6">
+    <div className="animate-fade-up space-y-6">
       <PageHeader
         title="CRM y audiencias"
         subtitle="Conexión con el CRM del laboratorio: segmentación médica, cobertura de visitadores reales y red de dependientes de farmacia."

@@ -7,7 +7,7 @@ import { regions } from "../../data/mock";
 
 const mapCenter: LatLngExpression = [20, 0];
 
-export function Regiones() {
+export function RegionsView() {
   const [selectedRegion, setSelectedRegion] = useState("América del Norte");
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
   const [geoData, setGeoData] = useState<any>(null);

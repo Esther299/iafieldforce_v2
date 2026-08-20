@@ -23,7 +23,7 @@ export function Credits() {
   const [amount, setAmount] = useState(1000);
 
   return (
-    <div className="animate-fade-up space-y-6 bg-sky-200 min-h-screen p-6">
+    <div className="animate-fade-up space-y-6">
       <PageHeader
         title="Modelo económico y créditos"
         subtitle="Instalación + saldo acreditado. La clave: costo muy bajo por VM enviada para masificar la comunicación."

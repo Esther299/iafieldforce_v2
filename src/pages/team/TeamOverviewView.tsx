@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { AvatarFace } from "../../components/AvatarFace";
+import { AvatarFace } from "../../components/common/AvatarFace";
 import { Badge, Card, Button } from "../../components/ui";
 import { useAppStore } from "../../store/useAppStore";
 import type { AvatarConfig } from "../../types";
 
-export function Equipo() {
+export function TeamOverviewView() {
   const { avatars } = useAppStore();
   const [selectedAvatar, setSelectedAvatar] = useState<AvatarConfig | null>(
     null,

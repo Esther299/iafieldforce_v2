@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { Layout } from "./components/Layout";
+import { AppLayout } from "./components/layout/AppLayout";
 import "leaflet/dist/leaflet.css";
 
 const Dashboard = lazy(() =>
@@ -54,7 +54,7 @@ export default function App() {
     <BrowserRouter>
       <Suspense fallback={<PageFallback />}>
         <Routes>
-          <Route element={<Layout />}>
+          <Route element={<AppLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="gobernanza" element={<Governance />} />
             <Route path="creacion-del-equipo" element={<Avatars />} />

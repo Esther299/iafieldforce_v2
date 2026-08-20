@@ -71,58 +71,26 @@ export function Territory() {
         }
       />
 
-      {/* 1. MÉTRICAS GLOBALES (estilo Dashboard) */}
+      {/* 1. MÉTRICAS GLOBALES */}
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="group relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50/60 via-white to-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-blue-600/80">
-              Médicos totales
-            </span>
-            <div className="rounded-xl bg-blue-500/10 p-2.5 text-blue-600 transition-transform group-hover:scale-110">
-              <Users size={20} />
-            </div>
-          </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
-            {totalDoctors}
-          </p>
-          <p className="mt-2 text-xs font-medium text-blue-700/80">
-            Base de datos CRM
-          </p>
-        </div>
-
-        <div className="group relative overflow-hidden rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50/60 via-white to-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600/80">
-              Cubiertos
-            </span>
-            <div className="rounded-xl bg-emerald-500/10 p-2.5 text-emerald-600 transition-transform group-hover:scale-110">
-              <UserCheck size={20} />
-            </div>
-          </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
-            {totalCovered}
-          </p>
-          <p className="mt-2 text-xs font-medium text-emerald-700/80">
-            {Math.round((totalCovered / totalDoctors) * 100)}% cobertura
-          </p>
-        </div>
-
-        <div className="group relative overflow-hidden rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50/60 via-white to-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-600/80">
-              No alcanzados
-            </span>
-            <div className="rounded-xl bg-amber-500/10 p-2.5 text-amber-600 transition-transform group-hover:scale-110">
-              <Target size={20} />
-            </div>
-          </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
-            {totalUncovered}
-          </p>
-          <p className="mt-2 text-xs font-medium text-amber-700/80">
-            Oportunidad de expansión
-          </p>
-        </div>
+        <Stat
+          label="Médicos totales"
+          value={totalDoctors}
+          hint="Base de datos CRM"
+          icon={<Users size={20} />}
+        />
+        <Stat
+          label="Cubiertos"
+          value={totalCovered}
+          hint={`${Math.round((totalCovered / totalDoctors) * 100)}% cobertura`}
+          icon={<UserCheck size={20} />}
+        />
+        <Stat
+          label="No alcanzados"
+          value={totalUncovered}
+          hint="Oportunidad de expansión"
+          icon={<Target size={20} />}
+        />
       </div>
 
       {/* 2. GRILLA DE TERRITORIOS (tarjetas interactivas) */}

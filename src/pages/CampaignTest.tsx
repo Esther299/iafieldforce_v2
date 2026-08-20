@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChatPanel } from "../components/ChatPanel";
+import { ChatPanel } from "../components/common/ChatPanel";
 import {
   Badge,
   Button,
@@ -7,6 +7,7 @@ import {
   PageHeader,
   Select,
   Modal,
+  Stat,
 } from "../components/ui";
 import { useAppStore } from "../store/useAppStore";
 import {
@@ -121,75 +122,32 @@ export function CampaignTest() {
         )}
       </div>
 
-      {/* Métricas rápidas (estilo Dashboard) */}
+      {/* Métricas rápidas */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="group relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50/60 via-white to-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-blue-600/80">
-              En prueba
-            </span>
-            <div className="rounded-xl bg-blue-500/10 p-2.5 text-blue-600 transition-transform group-hover:scale-110">
-              <Users size={18} />
-            </div>
-          </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
-            {testingCampaigns}
-          </p>
-          <p className="mt-2 text-xs font-medium text-blue-700/80">
-            Campañas en validación
-          </p>
-        </div>
-
-        <div className="group relative overflow-hidden rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50/60 via-white to-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600/80">
-              Aprobadas
-            </span>
-            <div className="rounded-xl bg-emerald-500/10 p-2.5 text-emerald-600 transition-transform group-hover:scale-110">
-              <CheckCircle2 size={18} />
-            </div>
-          </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
-            {approvedCampaigns}
-          </p>
-          <p className="mt-2 text-xs font-medium text-emerald-700/80">
-            Go final concedido
-          </p>
-        </div>
-
-        <div className="group relative overflow-hidden rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50/60 via-white to-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-600/80">
-              Borradores
-            </span>
-            <div className="rounded-xl bg-amber-500/10 p-2.5 text-amber-600 transition-transform group-hover:scale-110">
-              <FileCheck size={18} />
-            </div>
-          </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
-            {draftCampaigns}
-          </p>
-          <p className="mt-2 text-xs font-medium text-amber-700/80">
-            Pendientes de prueba
-          </p>
-        </div>
-
-        <div className="group relative overflow-hidden rounded-2xl border border-violet-100 bg-gradient-to-br from-violet-50/60 via-white to-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-violet-600/80">
-              Mensajes test
-            </span>
-            <div className="rounded-xl bg-violet-500/10 p-2.5 text-violet-600 transition-transform group-hover:scale-110">
-              <MessageSquare size={18} />
-            </div>
-          </div>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">
-            {store.testSession ? store.testSession.messages.length : 0}
-          </p>
-          <p className="mt-2 text-xs font-medium text-violet-700/80">
-            {store.testSession ? "Sesión activa" : "Sin sesión"}
-          </p>
-        </div>
+        <Stat
+          label="En prueba"
+          value={testingCampaigns}
+          hint="Campañas en validación"
+          icon={<Users size={18} />}
+        />
+        <Stat
+          label="Aprobadas"
+          value={approvedCampaigns}
+          hint="Go final concedido"
+          icon={<CheckCircle2 size={18} />}
+        />
+        <Stat
+          label="Borradores"
+          value={draftCampaigns}
+          hint="Pendientes de prueba"
+          icon={<FileCheck size={18} />}
+        />
+        <Stat
+          label="Mensajes test"
+          value={store.testSession ? store.testSession.messages.length : 0}
+          hint={store.testSession ? "Sesión activa" : "Sin sesión"}
+          icon={<MessageSquare size={18} />}
+        />
       </div>
 
       {/* Cuerpo principal: Chat + Panel lateral */}

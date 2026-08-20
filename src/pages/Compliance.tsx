@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { CheckCircle2, MessageSquareQuote, ShieldCheck, Sparkles, XCircle } from 'lucide-react';
-import { AvatarFace } from '../components/AvatarFace';
+import { AvatarFace } from '../components/common/AvatarFace';
 import { Badge, Button, Card, PageHeader } from '../components/ui';
 import { useAppStore } from '../store/useAppStore';
 

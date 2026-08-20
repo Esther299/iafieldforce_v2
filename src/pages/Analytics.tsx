@@ -46,7 +46,7 @@ export function Analytics() {
     : analytics.bySpecialty;
 
   return (
-    <div className="animate-fade-up space-y-6 bg-sky-200 min-h-screen p-6">
+    <div className="animate-fade-up space-y-6">
       <PageHeader
         title="Analítica de campaña"
         subtitle="Reach real (click al link), engagement, CTAs, muestras y desempeño por canal y especialidad."
