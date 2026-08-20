@@ -54,7 +54,7 @@ export function Governance() {
   ];
 
   return (
-    <div className="animate-fade-up space-y-6 bg-sky-200 min-h-screen p-6">
+    <div className="animate-fade-up space-y-6">
       <PageHeader
         title="Gobernanza"
         subtitle="Prioridad 1 del sistema. Alineación de organización, productos, campañas e información para asegurar un sistema corporativo seguro y consistente."

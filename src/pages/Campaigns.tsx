@@ -250,7 +250,7 @@ export function Campaigns() {
   }
 
   return (
-    <div className="animate-fade-up space-y-6 bg-sky-200 min-h-screen p-6">
+    <div className="animate-fade-up space-y-6">
       <PageHeader
         title="Campañas"
         subtitle="Script exacto del gerente de producto · prueba interna · go final · envío WhatsApp / email / SMS."

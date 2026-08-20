@@ -16,10 +16,10 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { useState } from "react";
-import { cn } from "../lib/cn";
-import { useAppStore } from "../store/useAppStore";
-import { type UserRole } from "../types";
-import { Badge, Button } from "../components/ui";
+import { cn } from "../../lib/cn";
+import { useAppStore } from "../../store/useAppStore";
+import { type UserRole } from "../../types";
+import { Badge, Button } from "../ui";
 
 const nav = [
   { to: "/", label: "Centro de Mando", icon: LayoutDashboard },
@@ -62,7 +62,7 @@ const userInfoMap: Record<UserRole, { name: string; roleTitle: string }> = {
   compliance: { name: "María José", roleTitle: "Gerente de Compliance" },
 };
 
-export function Layout() {
+export function AppLayout() {
   const [open, setOpen] = useState(false);
 
   // Consumo desde el store actualizado
@@ -79,7 +79,7 @@ export function Layout() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-50/30 via-slate-50 to-white">
+    <div className="min-h-screen bg-surface">
       <div className="mx-auto flex min-h-screen max-w-[1600px]">
         <aside
           className={cn(
@@ -89,10 +89,10 @@ export function Layout() {
         >
           <div className="mb-6 flex items-center justify-between px-1">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full border-[5px] border-[#1e3579] text-3xl font-black text-[#1e3579]">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full border-[5px] border-navy text-3xl font-black text-navy">
                 ia
               </div>
-              <span className="text-4xl font-black tracking-tight text-[#1e3579]">
+              <span className="text-4xl font-black tracking-tight text-navy">
                 fieldforce
               </span>
             </div>
@@ -126,7 +126,7 @@ export function Layout() {
                   cn(
                     "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
                     isActive
-                      ? "bg-[#1e3579] text-white shadow-md shadow-brand-900/20 ring-1"
+                      ? "bg-navy text-white shadow-md shadow-brand-900/20 ring-1"
                       : "text-ink-600 hover:bg-ink-100/80 hover:text-ink-900",
                   )
                 }
