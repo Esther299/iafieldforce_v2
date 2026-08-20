@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "../../lib/cn";
-import { useAppStore } from "../../store/useAppStore";
+import { useAppStore } from "../../store/";
 import { type UserRole } from "../../types";
 import { Badge, Button } from "../ui";
 
@@ -40,7 +40,6 @@ const quickLinks = [
   { to: "/visita", label: "Visita demo" },
   { to: "/prueba", label: "Test de campaña" },
 ];
-
 
 const roleOptions: Array<{ value: UserRole; label: string }> = [
   { value: "sales-force-creator", label: "Sales Force Creator" },

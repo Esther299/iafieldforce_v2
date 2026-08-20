@@ -8,7 +8,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { Badge, Button, Card, PageHeader } from "../components/ui";
-import { useAppStore } from "../store/useAppStore";
+import { useAppStore } from "../store/";
 
 export function Governance() {
   const { governanceRules, setRuleEnforcement, governanceBlocks } =

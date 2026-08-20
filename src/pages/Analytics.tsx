@@ -23,7 +23,7 @@ import {
   Stethoscope,
 } from "lucide-react";
 import { Button, Card, PageHeader } from "../components/ui";
-import { useAppStore } from "../store/useAppStore";
+import { useAppStore } from "../store/";
 
 export function Analytics() {
   const { analytics } = useAppStore();

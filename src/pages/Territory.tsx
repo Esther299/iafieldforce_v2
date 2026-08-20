@@ -13,7 +13,7 @@ import {
   Award,
 } from "lucide-react";
 import { Badge, Button, Card, PageHeader, Modal, Stat } from "../components/ui";
-import { useAppStore } from "../store/useAppStore";
+import { useAppStore } from "../store/";
 
 export function Territory() {
   const { territoryInsights, realReps, campaigns, doctors } = useAppStore();

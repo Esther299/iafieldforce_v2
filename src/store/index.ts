@@ -14,8 +14,26 @@ import { createTestSlice } from "./slices/test";
 import { createGovernanceSlice } from "./slices/governance";
 import { academyModules, trainerStyles } from "../data";
 
-export const useAppStore = create((set, get) => ({
-  // Estado inicial combinado de todos los slices
+// Definir el tipo del estado combinado
+type AppState = ReturnType<typeof createUserSlice> &
+  ReturnType<typeof createAvatarsSlice> &
+  ReturnType<typeof createProductsSlice> &
+  ReturnType<typeof createDoctorsSlice> &
+  ReturnType<typeof createPharmacySlice> &
+  ReturnType<typeof createRealRepsSlice> &
+  ReturnType<typeof createCampaignsSlice> &
+  ReturnType<typeof createCreditsSlice> &
+  ReturnType<typeof createAnalyticsSlice> &
+  ReturnType<typeof createDispatchesSlice> &
+  ReturnType<typeof createVisitsSlice> &
+  ReturnType<typeof createTestSlice> &
+  ReturnType<typeof createGovernanceSlice> & {
+    academyModules: typeof academyModules;
+    trainerStyles: typeof trainerStyles;
+  };
+
+// Creamos el store con el tipo explícito
+export const useAppStore = create<AppState>((set, get) => ({
   ...createUserSlice(set),
   ...createAvatarsSlice(set),
   ...createProductsSlice(set),
@@ -29,7 +47,7 @@ export const useAppStore = create((set, get) => ({
   ...createVisitsSlice(set, get),
   ...createTestSlice(set, get),
   ...createGovernanceSlice(set),
-  // Datos estáticos adicionales
+  // Datos adicionales
   academyModules,
   trainerStyles,
 }));

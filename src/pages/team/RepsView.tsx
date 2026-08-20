@@ -9,7 +9,7 @@ import {
   Select,
   Textarea,
 } from "../../components/ui";
-import { useAppStore } from "../../store/useAppStore";
+import { useAppStore } from "../../store";
 import type {
   AccentRegion,
   AvatarConfig,

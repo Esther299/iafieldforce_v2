@@ -28,7 +28,7 @@ import {
   ConfirmDialog,
 } from "../components/ui";
 import { estimateAudienceSize } from "../lib/audience";
-import { useAppStore } from "../store/useAppStore";
+import { useAppStore } from "../store/";
 import type {
   Campaign,
   CampaignStatus,

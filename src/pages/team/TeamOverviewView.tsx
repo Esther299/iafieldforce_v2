@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AvatarFace } from "../../components/common/AvatarFace";
 import { Badge, Card, Button } from "../../components/ui";
-import { useAppStore } from "../../store/useAppStore";
+import { useAppStore } from "../../store";
 import type { AvatarConfig } from "../../types";
 
 export function TeamOverviewView() {

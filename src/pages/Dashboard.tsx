@@ -18,7 +18,7 @@ import {
   X,
 } from "lucide-react";
 import { Badge, Button, Card, Modal, PageHeader } from "../components/ui";
-import { useAppStore } from "../store/useAppStore";
+import { useAppStore } from "../store/";
 
 export function Dashboard() {
   const {

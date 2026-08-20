@@ -18,7 +18,7 @@ import {
   Briefcase,
 } from "lucide-react";
 import { Badge, Card, Input, PageHeader } from "../components/ui";
-import { useAppStore } from "../store/useAppStore";
+import { useAppStore } from "../store/";
 
 export function Crm() {
   const { doctors, pharmacyStaff, realReps, campaigns } = useAppStore();

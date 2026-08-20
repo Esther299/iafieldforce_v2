@@ -20,7 +20,7 @@ import {
   Textarea,
   Modal,
 } from "../components/ui";
-import { useAppStore } from "../store/useAppStore";
+import { useAppStore } from "../store/";
 import type { DocType } from "../types";
 
 const docTypes: DocType[] = [
