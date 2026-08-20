@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AlertCircle, Bell, Clock, Mail } from "lucide-react";
-import { DocumentList } from "../../components/academy";
+import { DocumentList } from "../../components/pages/academy";
 import { Badge, Button, SectionLabel } from "../../components/ui";
 import type { AcademyDocument } from "../../types/academia";
 

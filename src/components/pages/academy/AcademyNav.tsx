@@ -1,5 +1,9 @@
-import type { AcademyArea, AcademyAreaId, AcademySubsection } from "../../types/academia";
-import { TabBar, TabPill } from "../ui";
+import type {
+  AcademyArea,
+  AcademyAreaId,
+  AcademySubsection,
+} from "../../../types/academia";
+import { TabBar, TabPill } from "../../ui";
 
 /** Barra de navegación de áreas de negocio de la Academia. */
 export function AreaNav({

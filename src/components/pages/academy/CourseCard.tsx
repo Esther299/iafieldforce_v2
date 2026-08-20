@@ -1,6 +1,6 @@
 import { Calendar, Plus, Upload, User } from "lucide-react";
-import type { Course } from "../../types/academia";
-import { Badge, Button, Card, SectionLabel } from "../ui";
+import type { Course } from "../../../types/academia";
+import { Badge, Button, Card, SectionLabel } from "../../ui";
 
 export function CourseCard({
   course,
@@ -53,7 +53,9 @@ export function CourseCard({
           {course.documents.length === 0 ? (
             <p className="text-xs text-ink-400">No hay materiales cargados.</p>
           ) : (
-            course.documents.map((doc) => <Badge key={doc.name}>{doc.name}</Badge>)
+            course.documents.map((doc) => (
+              <Badge key={doc.name}>{doc.name}</Badge>
+            ))
           )}
         </div>
       </div>

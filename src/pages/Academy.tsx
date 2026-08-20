@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AreaNav, SubsectionTabs } from "../components/academy";
+import { AreaNav, SubsectionTabs } from "../components/pages/academy";
 import { Empty, PageContainer, PageHeader } from "../components/ui";
 import {
   academyAreas,
@@ -14,7 +14,7 @@ import {
   CreateDiagnosisModal,
   CreateTrainerModal,
   UploadDocumentModal,
-} from "../modals/academy";
+} from "../components/pages/academy/modals";
 import type {
   AcademyAreaId,
   AcademyDocument,

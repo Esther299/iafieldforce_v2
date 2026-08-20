@@ -1,6 +1,6 @@
 import { Download, Eye, FileText, Link, Plus, Upload } from "lucide-react";
-import type { AcademyDocument } from "../../types/academia";
-import { Badge, Button, SectionLabel } from "../ui";
+import type { AcademyDocument } from "../../../types/academia";
+import { Badge, Button, SectionLabel } from "../../ui";
 
 export function DocumentList({
   documents,
@@ -15,7 +15,9 @@ export function DocumentList({
 }) {
   return (
     <div className="space-y-3">
-      {title && <SectionLabel icon={<FileText size={16} />}>{title}</SectionLabel>}
+      {title && (
+        <SectionLabel icon={<FileText size={16} />}>{title}</SectionLabel>
+      )}
       <div className="space-y-2">
         {documents.length === 0 ? (
           <p className="text-sm text-ink-500">No hay documentos cargados.</p>

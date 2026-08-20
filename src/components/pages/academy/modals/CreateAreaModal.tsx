@@ -1,17 +1,15 @@
 import type { FormEvent } from "react";
 import { useState } from "react";
-import { Input, Label, Modal, ModalActions } from "../../components/ui";
+import { Input, Label, Modal, ModalActions } from "../../../ui";
 
-export function CreateDiagnosisModal({
+export function CreateAreaModal({
   isOpen,
   onClose,
   onCreate,
-  lineName,
 }: {
   isOpen: boolean;
   onClose: () => void;
-  onCreate: (diagnosisName: string) => void;
-  lineName: string;
+  onCreate: (name: string) => void;
 }) {
   const [name, setName] = useState("");
 
@@ -24,22 +22,18 @@ export function CreateDiagnosisModal({
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title={`Crear nuevo diagnóstico para ${lineName}`}
-    >
+    <Modal isOpen={isOpen} onClose={onClose} title="Crear otra área">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <Label>Nombre del diagnóstico</Label>
+          <Label>Nombre del área</Label>
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Ej. Rinitis Alérgica"
+            placeholder="Ej. Área de Operaciones"
             required
           />
         </div>
-        <ModalActions onCancel={onClose} submitLabel="Crear Diagnóstico" />
+        <ModalActions onCancel={onClose} submitLabel="Crear Área" />
       </form>
     </Modal>
   );

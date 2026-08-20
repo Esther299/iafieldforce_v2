@@ -1,5 +1,5 @@
 import { Plus, Users } from "lucide-react";
-import { TrainerCard } from "../../components/academy";
+import { TrainerCard } from "../../components/pages/academy";
 import { Badge, Button, SectionLabel } from "../../components/ui";
 import type { Trainer } from "../../types/academia";
 

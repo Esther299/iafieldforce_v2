@@ -1,7 +1,7 @@
 import type { FormEvent } from "react";
 import { useState } from "react";
-import { Input, Label, Modal, ModalActions, Textarea } from "../../components/ui";
-import type { Course } from "../../types/academia";
+import { Input, Label, Modal, ModalActions, Textarea } from "../../../ui";
+import type { Course } from "../../../../types/academia";
 
 const EMPTY_FORM = {
   title: "",

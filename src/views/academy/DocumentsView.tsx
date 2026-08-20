@@ -1,4 +1,4 @@
-import { DocumentList } from "../../components/academy";
+import { DocumentList } from "../../components/pages/academy";
 import type { AcademyDocument } from "../../types/academia";
 
 /**

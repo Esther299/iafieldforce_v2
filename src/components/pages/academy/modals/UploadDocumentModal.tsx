@@ -1,17 +1,11 @@
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { Upload } from "lucide-react";
-import {
-  Input,
-  Label,
-  Modal,
-  ModalActions,
-  Select,
-} from "../../components/ui";
+import { Input, Label, Modal, ModalActions, Select } from "../../../ui";
 import type {
   AcademyDocument,
   AcademyDocumentType,
-} from "../../types/academia";
+} from "../../../../types/academia";
 
 const DOCUMENT_TYPES: { value: AcademyDocumentType; label: string }[] = [
   { value: "pdf", label: "PDF" },

@@ -1,5 +1,5 @@
 import { BookOpen, Plus } from "lucide-react";
-import { CourseCard } from "../../components/academy";
+import { CourseCard } from "../../components/pages/academy";
 import { Badge, Button, SectionLabel } from "../../components/ui";
 import type { Course } from "../../types/academia";
 

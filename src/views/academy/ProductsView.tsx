@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Plus, Upload } from "lucide-react";
-import { DocumentList } from "../../components/academy";
+import { DocumentList } from "../../components/pages/academy";
 import { Button, Card, TabBar, TabPill } from "../../components/ui";
 import type { ProductMarca } from "../../types/academia";
 

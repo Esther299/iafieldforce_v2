@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Video } from "lucide-react";
-import type { Trainer } from "../../types/academia";
-import { Badge, Card } from "../ui";
+import type { Trainer } from "../../../types/academia";
+import { Badge, Card } from "../../ui";
 
 function TrainerTrait({
   label,

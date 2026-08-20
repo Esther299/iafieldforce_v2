@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
-import { DocumentList } from "../../components/academy";
+import { DocumentList } from "../../components/pages/academy";
 import { Button, TabBar, TabPill } from "../../components/ui";
 import type { MedicalLine } from "../../types/academia";
 
