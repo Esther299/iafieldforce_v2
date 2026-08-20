@@ -1,6 +1,6 @@
 import { MoreHorizontal, Plus } from "lucide-react";
-import { Button, Card, SectionLabel } from "../../components/ui";
-import type { CustomArea } from "../../types/academia";
+import { Button, Card, SectionLabel } from "../../../ui";
+import type { CustomArea } from "../../../../types/academia";
 
 /** Pantalla de áreas personalizadas creadas por la compañía. */
 export function CustomAreaView({

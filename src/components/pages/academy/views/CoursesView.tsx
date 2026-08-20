@@ -1,7 +1,7 @@
 import { BookOpen, Plus } from "lucide-react";
-import { CourseCard } from "../../components/pages/academy";
-import { Badge, Button, SectionLabel } from "../../components/ui";
-import type { Course } from "../../types/academia";
+import { CourseCard } from "..";
+import { Badge, Button, SectionLabel } from "../../../ui";
+import type { Course } from "../../../../types/academia";
 
 /** Pantalla de cursos formativos. */
 export function CoursesView({

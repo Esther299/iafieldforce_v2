@@ -32,7 +32,7 @@ import {
   ProductsView,
   PromotionsView,
   TrainersView,
-} from "../views/academy";
+} from "../components/pages/academy/views";
 
 interface UploadContext {
   targetType: "course" | "product" | "document" | "diagnosis";

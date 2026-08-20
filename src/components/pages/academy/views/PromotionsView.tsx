@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { AlertCircle, Bell, Clock, Mail } from "lucide-react";
-import { DocumentList } from "../../components/pages/academy";
-import { Badge, Button, SectionLabel } from "../../components/ui";
-import type { AcademyDocument } from "../../types/academia";
+import { DocumentList } from "..";
+import { Badge, Button, SectionLabel } from "../../../ui";
+import type { AcademyDocument } from "../../../../types/academia";
 
 /** Pantalla comercial de promociones vigentes con recordatorios. */
 export function PromotionsView({
