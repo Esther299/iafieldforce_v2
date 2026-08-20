@@ -1,7 +1,7 @@
 import { Plus, Users } from "lucide-react";
-import { TrainerCard } from "../..";
-import { Badge, Button, SectionLabel } from "../../../../ui";
-import type { Trainer } from "../../../../../types/academia";
+import { TrainerCard } from "../";
+import { Badge, Button, SectionLabel } from "../../../ui";
+import type { Trainer } from "../../../../types/academia";
 
 /** Pantalla del Gerente de Entrenamiento: formadores. */
 export function TrainersView({

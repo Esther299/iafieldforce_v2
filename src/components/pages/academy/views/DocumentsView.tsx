@@ -1,5 +1,5 @@
-import { DocumentList } from "../..";
-import type { AcademyDocument } from "../../../../../types/academia";
+import { DocumentList } from "../";
+import type { AcademyDocument } from "../../../../types/academia";
 
 /**
  * Pantalla genérica de documentos: descripción de compañía, políticas,

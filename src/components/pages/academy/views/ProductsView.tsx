@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Plus, Upload } from "lucide-react";
-import { DocumentList } from "../..";
-import { Button, Card, TabBar, TabPill } from "../../../../ui";
-import type { ProductMarca } from "../../../../../types/academia";
+import { DocumentList } from "../";
+import { Button, Card, TabBar, TabPill } from "../../../ui";
+import type { ProductMarca } from "../../../../types/academia";
 
 type ProductTab = "campaigns" | "objections" | "faqs";
 
