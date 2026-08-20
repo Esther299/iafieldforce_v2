@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAppStore } from "../store/useAppStore";
+import { useAppStore } from "../store/";
 
 export function useCredits() {
   const store = useAppStore();

@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { useAppStore } from "../store/useAppStore";
+import { useAppStore } from "../store/";
 import type { Channel } from "../types";
 
 export function useVisit() {

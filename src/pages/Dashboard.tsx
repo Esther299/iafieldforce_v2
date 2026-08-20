@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Sparkles } from "lucide-react";
-import { Badge, Button, Card, PageHeader } from "../components/ui";
+import { Button, Card, PageHeader } from "../components/ui";
 import {
   DashboardStats,
   DashboardPillars,

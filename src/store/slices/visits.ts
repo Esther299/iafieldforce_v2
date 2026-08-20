@@ -1,6 +1,5 @@
 import type { VisitSession, Channel, CtaType } from "../../types";
 import { generateGovernedReply, startVisitOpening } from "../../lib/governance";
-import { filterDoctors } from "../../lib/audience";
 import { uid, msg } from "../utils";
 
 export interface VisitsSlice {
